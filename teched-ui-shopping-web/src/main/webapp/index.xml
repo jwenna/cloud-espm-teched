@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<Module>  
+    <ModulePrefs title="ESPM Shop Application" height="250">  
+        <Require feature="sap-context" />
+        <Require feature="sap-ui5">
+			<Param name="sap-ui-params">
+            {
+                "namespaces" : 
+                [
+	                {
+	                	"name" : "app",
+	                    "location" : "https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-shopping-web/js"
+	                },
+	                {
+	                	"name" : "css",
+	                    "location" : "https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-shopping-web/css"
+	                },
+	                {
+	                	"name" : "composite.productActions",
+	                    "location" : "https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-shopping-web/js/controls/productActions"
+	                },
+	                {
+	                	"name" : "app.config",
+	                    "location" : "https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-shopping-web/js/config"
+	                },
+	                {
+	                	"name" : "app.formatter",
+	                    "location" : "https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-shopping-web/js/formatter"
+	                },
+	                {
+	                	"name" : "app.messages",
+	                    "location" : "https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-shopping-web/js/messages"
+	                },
+	                {
+	                	"name" : "app.utility",
+	                    "location" : "https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-shopping-web/js/utility"
+	                },
+	                {
+	                	"name" : "app.validator",
+	                    "location" : "https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-shopping-web/js/validator"
+	                },
+	                {
+	                	"name" : "app.welcome",
+	                    "location" : "https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-shopping-web/js/welcome"
+	                },
+	                {
+	                	"name" : "espm-ui-shopping-web",
+	                    "location" : "https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-shopping-web/espm-ui-shopping-web"
+	                },
+	                {
+	                	"name" : "i18n",
+	                    "location" : "https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-shopping-web/i18n"
+	                },
+	                {
+	                	"name" : "proxy",
+	                    "location" : "https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-shopping-web/proxy"
+	                }
+                ]
+            }
+            </Param>
+		</Require> 
+    </ModulePrefs>  
+	
+    <Content type="html">  
+        <![CDATA[  
+<body class="sapUiBody" role="application" >
+	<div id='content'></div>
+	
+	<script src="js/app.js"></script>
+	
+</body>
+ 
+]]>  
+    </Content>  
+</Module>  
+

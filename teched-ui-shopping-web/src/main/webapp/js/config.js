@@ -36,12 +36,12 @@ sap.app.config = {
 	displayAbapPassword : "Espm1234",
 
 	// local JSON model provides customer, items and order for write access
-	orderModelUrl: "data/order.json",
+	orderModelUrl: "https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-shopping-web/data/order.json",
 
 	// local JSON model provides countries for address data
-	countriesModelUrl : "data/countries.json",
+	countriesModelUrl : "https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-shopping-web/data/countries.json",
 
-	productPlaceholderImg: "images/placeholder.product.150x150.png",
+	productPlaceholderImg: "https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-shopping-web/images/placeholder.product.150x150.png",
 	// Symbol for Euro
 	currencySymbol: "\u20AC",
 	// Placeholder with Euro Symbol

@@ -5,26 +5,32 @@
  * instantiate main product model
  */
 
-jQuery.sap.registerModulePath('app', 'js');
+function init()
+{
+	
+var baseURL = "https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-reviews-web/";
 
+jQuery.sap.registerModulePath("app", "js");
 jQuery.sap.require("app.config");
 jQuery.sap.require("app.utility");
 
 // Internationalization: Create global i18n resource bundle for texts in application UI
 sap.app.i18n = new sap.ui.model.resource.ResourceModel({
-	bundleUrl : "i18n/i18n.properties",
+	bundleUrl : baseURL + "i18n/i18n.properties",
 	locale : sap.ui.getCore().getConfiguration().getLanguage()
 });
 sap.ui.getCore().setModel(sap.app.i18n, "i18n");
 
 // create global i18n resource bundle for country names
 sap.app.countryBundle = jQuery.sap.resources({
-	url : "i18n/countries.properties",
+	url : baseURL + "i18n/countries.properties",
 	locale : sap.ui.getCore().getConfiguration().getLanguage()
 });
 
 // instantiate initial view with a shell
-sap.ui.localResources(sap.app.config.viewNamespace);
+//sap.ui.localResources(sap.app.config.viewNamespace);
+jQuery.sap.registerModulePath(sap.app.config.viewNamespace, baseURL + sap.app.config.viewNamespace);
+
 var oMainView = sap.ui.view({
 	id : "main-shell",
 	viewName : "espm-ui-reviews-web.main",
@@ -32,7 +38,7 @@ var oMainView = sap.ui.view({
 });
 
 // get OData Model from server, using JSON format
-sap.app.odatamodel = new sap.ui.model.odata.ODataModel("proxy/" + sap.app.utility.getBackendDestination(), true);
+sap.app.odatamodel = new sap.ui.model.odata.ODataModel("https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-reviews-web/proxy/" + sap.app.utility.getBackendDestination(), true);
 sap.app.odatamodel.setCountSupported(false);
 sap.app.odatamodel.attachRequestCompleted(this, sap.app.readOdata.requestCompleted);
 
@@ -48,11 +54,13 @@ sap.app.odatamodel.read("/ProductCategories", null, null, false, sap.app.readOda
 		sap.app.readOdata.readError);
 
 // get extension business data (product reviews related data)
-sap.app.extensionodatamodel = new sap.ui.model.odata.ODataModel("proxy/"
-		+ sap.app.utility.getExtensionBackendDestination());
+sap.app.extensionodatamodel = new sap.ui.model.odata.ODataModel("https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-reviews-web/proxy/" + sap.app.utility.getExtensionBackendDestination());
 
 // set model to core as extensionodatamodel
 sap.ui.getCore().setModel(sap.app.extensionodatamodel, "extensionodatamodel");
 sap.app.extensionodatamodel.attachRequestCompleted(this, sap.app.readExtensionOData.requestCompleted);
 
 oMainView.placeAt("content");
+}
+
+gadgets.util.registerOnLoadHandler(init);

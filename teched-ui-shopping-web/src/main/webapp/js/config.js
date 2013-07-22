@@ -42,6 +42,7 @@ sap.app.config = {
 	countriesModelUrl : gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/data/countries.json"),
 
 	productPlaceholderImg: gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/images/placeholder.product.150x150.png"),
+
 	// Symbol for Euro
 	currencySymbol: "\u20AC",
 	// Placeholder with Euro Symbol

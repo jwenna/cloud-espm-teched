@@ -81,5 +81,5 @@ sap.ui.controller("espm-ui-reviews-web.customer-reviews", {
 	hideRowRepeater: function() {
 		sap.app.uivisibility.setUiControlIsVisible("customer-reviews-row-repeater-id", false);
 	},
-
+	
 });

@@ -128,7 +128,6 @@ sap.ui.jsview("espm-ui-reviews-web.customer-review-creation", {
 											}) ]
 								}));
 
-
 		return(oMatrixLayout);
 	}
 

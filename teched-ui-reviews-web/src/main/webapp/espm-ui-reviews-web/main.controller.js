@@ -20,5 +20,5 @@ sap.ui.controller("espm-ui-reviews-web.main", {
 			});
 		}
 		return this.oViewCache[viewName];
-	}
+	},
 });

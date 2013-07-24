@@ -25,8 +25,10 @@ sap.app.config = {
 	displayAbapUser : "ESPM_TEST",
 	displayAbapPassword : "Espm1234",
 
-	abapImagesBaseUrl : "/teched-ui-reviews-web/",
-	cloudImagesBaseUrl : "/teched-ui-reviews-web/espm-model-web/images/",
+	abapImagesBaseUrl : "",
+	cloudImagesBaseUrl : "/espm-model-web/images/",
 
-	productPlaceholderImg : "/images/placeholder.product.150x150.png",
+	productPlaceholderImg : "images/placeholder.product.150x150.png",
+	
+	displayProductSelectionPanel: false,
 };

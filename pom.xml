@@ -52,6 +52,7 @@
 		<module>teched-ui-shopping-web</module>
 		<module>teched-model-extension-jpa</module>
 		<module>teched-model-extension-web</module>
+		<module>teched-ui-reviews-web</module>
 	</modules>
 
 	<repositories>

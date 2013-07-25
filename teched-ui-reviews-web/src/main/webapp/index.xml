@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<Module>  
+    <ModulePrefs title="ESPM Customer Review Extension" height="250">  
+        <Require feature="pubsub-2" />  
+        <Require feature="sap-context" /> 
+        <Require feature="sap-ui5">
+			<Param name="sap-ui-params">
+            {
+                "namespaces" : 
+                [
+	                {
+	                	"name" : "app",
+	                    "location" : "https://techedespmd039236trial.hanatrial.ondemand.com/teched-ui-reviews-web/portal/js"
+	                },
+	                {
+	                	"name" : "app.config",
+	                    "location" : "https://techedespmd039236trial.hanatrial.ondemand.com/teched-ui-reviews-web/portal/js/config"
+	                },
+	                {
+	                	"name" : "app.utility",
+	                    "location" : "https://techedespmd039236trial.hanatrial.ondemand.com/teched-ui-reviews-web/portal/js/utility"
+	                },
+	                {
+	                	"name" : "espm-ui-reviews-web",
+	                    "location" : "https://techedespmd039236trial.hanatrial.ondemand.com/teched-ui-reviews-web/espm-ui-reviews-web"
+	                },
+	                {
+	                	"name" : "i18n",
+	                    "location" : "https://techedespmd039236trial.hanatrial.ondemand.com/teched-ui-reviews-web/i18n"
+	                },
+	                {
+	                	"name" : "proxy",
+	                    "location" : "https://techedespmd039236trial.hanatrial.ondemand.com/teched-ui-reviews-web/proxy"
+	                }
+                ]
+            }
+            </Param>
+		</Require> 
+    </ModulePrefs>  
+
+    <Content type="html">  
+        <![CDATA[  
+
+<body class="sapUiBody" role="application" >
+	<div id='content'></div>
+	
+	<script src="portal/js/app.js"></script>
+	
+	<script language="javascript" type="text/javascript">  
+  
+	    var subId;  
+	    var isSub = false;  
+	  
+	    function updateReviews(topic, context) 
+	    {  
+	       var selectedKey = context.getPropertyByKey("productID")[0];
+	       
+	       var oEventBus = sap.ui.getCore().getEventBus();
+	       oEventBus.publish("sap.app", "selectedProductIdChanged", selectedKey);
+	    }  
+	  
+	    /* 
+	     * Subscribe to Site Context using sap-context feature. 
+	     */  
+	    function subscribe() 
+	    {  
+	        subId = gadgets.sapcontext.subscribe(updateReviews);  
+	    }  
+	  
+	    /* 
+	     * Unsubscribe to Site Context using sap-context feature. 
+	     */  
+	    function unsubscribe() 
+	    {  
+	        gadgets.sapcontext.unsubscribe(subId);  
+	        isSub = false;  
+	    }  
+	</script>  
+		
+	<script language="javascript" type="text/javascript">  
+              gadgets.sapcontext.registerOnContextLoad(subscribe);  
+    </script>  
+
+</body>
+ 
+]]>  
+    </Content>  
+</Module>  

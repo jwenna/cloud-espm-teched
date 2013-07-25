@@ -30,5 +30,9 @@ sap.app.config = {
 
 	productPlaceholderImg : "images/placeholder.product.150x150.png",
 	
-	displayProductSelectionPanel: false,
+	displayProductSelectionPanel: true,
+	
+	displayShell: true,
+	
+	
 };

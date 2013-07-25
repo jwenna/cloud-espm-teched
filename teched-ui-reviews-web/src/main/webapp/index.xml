@@ -57,6 +57,9 @@
 	       
 	       var oEventBus = sap.ui.getCore().getEventBus();
 	       oEventBus.publish("sap.app", "selectedProductIdChanged", selectedKey);
+	       
+	       // make sure to update the productId combo box
+		   sap.ui.getCore().byId("product-selection-dropdown-box-id").setSelectedKey(selectedKey);
 	    }  
 	  
 	    /* 

@@ -1,0 +1,56 @@
+/**
+ * app.js
+ * 
+ * main application script - include required modules - instantiate localization model - init main shell view -
+ * instantiate main product model
+ */
+
+function init()
+{
+	jQuery.sap.registerModulePath('app', 'portal/js');
+	
+	jQuery.sap.require("app.config");
+	jQuery.sap.require("app.utility");
+	
+	// Internationalization: Create global i18n resource bundle for texts in application UI
+	sap.app.i18n = new sap.ui.model.resource.ResourceModel({
+		bundleUrl : sap.app.config.baseURL + "i18n/i18n.properties",
+		locale : sap.ui.getCore().getConfiguration().getLanguage()
+	});
+	sap.ui.getCore().setModel(sap.app.i18n, "i18n");
+	
+	// instantiate initial view with a shell
+	jQuery.sap.registerModulePath(sap.app.config.viewNamespace, sap.app.config.baseURL + sap.app.config.viewNamespace);
+	var oMainView = sap.ui.view({
+		id : "main-shell",
+		viewName : "espm-ui-reviews-web.main",
+		type : sap.ui.core.mvc.ViewType.JS
+	});
+	
+	// get OData Model from server, using JSON format
+	sap.app.odatamodel = new sap.ui.model.odata.ODataModel(sap.app.config.proxyURL + sap.app.utility.getBackendDestination(), true);
+	sap.app.odatamodel.setCountSupported(false);
+	sap.app.odatamodel.attachRequestCompleted(this, sap.app.readOdata.requestCompleted);
+	
+	// ensure that CSRF token is not taken from cache
+	sap.app.odatamodel.refreshSecurityToken();
+	
+	// set model to core
+	sap.ui.getCore().setModel(sap.app.odatamodel);
+	
+	// get categories from OData model and transfer it in readCategoriesSuccess into a json model to add an the additional
+	// category entry 'All Categories' which is not available in a OData model
+	sap.app.odatamodel.read("/ProductCategories", null, null, false, sap.app.readOdata.readCategoriesSuccess, sap.app.readOdata.readError);
+	
+	// get extension business data (product reviews related data)
+	sap.app.extensionodatamodel = new sap.ui.model.odata.ODataModel(sap.app.config.proxyURL + sap.app.utility.getExtensionBackendDestination());
+	
+	// set model to core as extensionodatamodel
+	sap.ui.getCore().setModel(sap.app.extensionodatamodel, "extensionodatamodel");
+	sap.app.extensionodatamodel.attachRequestCompleted(this, sap.app.readExtensionOData.requestCompleted);
+	
+	oMainView.placeAt("content");
+}
+
+// trigger the execution of the init() script once the portal RT is ready
+gadgets.util.registerOnLoadHandler(init);

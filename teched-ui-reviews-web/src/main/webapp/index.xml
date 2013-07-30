@@ -53,13 +53,16 @@
 	  
 	    function updateReviews(topic, context) 
 	    {  
-	       var selectedKey = context.getPropertyByKey("productID")[0];
-	       
-	       var oEventBus = sap.ui.getCore().getEventBus();
-	       oEventBus.publish("sap.app", "selectedProductIdChanged", selectedKey);
-	       
-	       // make sure to update the productId combo box
-		   sap.ui.getCore().byId("product-selection-dropdown-box-id").setSelectedKey(selectedKey);
+	       if ( context.getPropertyByKey("selectedKey") != null)
+	       {
+		       	var selectedKey = context.getPropertyByKey("selectedKey")[0];
+		       
+		       	var oEventBus = sap.ui.getCore().getEventBus();
+		       	oEventBus.publish("sap.app", "selectedProductIdChanged", selectedKey);
+		       
+		       	// make sure to update the productId combo box
+			   	sap.ui.getCore().byId("product-selection-dropdown-box-id").setSelectedKey(selectedKey);
+	 		}
 	    }  
 	  
 	    /* 

@@ -22,7 +22,7 @@
            
            if (productID.length > 0) 
            {  
-           		publish("productID", productID);  
+           		publish("selectedKey", productID);  
                 document.getElementById('comments').innerHTML= "";  
            } 
            else 

@@ -44,7 +44,14 @@ sap.ui.controller("espm-ui-shopping-web.products", {
 		var oContext = oEvent.getSource().getBindingContext();
 		sap.app.mainController.getCachedView("productDetail");
 		var oDetailThingInspector = sap.ui.getCore().byId("detail-layout-content");
-
+		
+		// [mod_start] publish event
+		var sPath = oContext.getPath();
+		var selectedKey = sPath.match(/'(.*?)'/)[1];
+		var oEventBus = sap.ui.getCore().getEventBus();
+		oEventBus.publish("sap.app", "selectedProductIdChanged", selectedKey);
+		// [mod_end] publish event
+		
 		oDetailThingInspector.setModel(oEvent.getSource().getModel());
 		oDetailThingInspector.setBindingContext(oContext);
 		if (!oDetailThingInspector.isOpen()) {

@@ -81,6 +81,11 @@ sap.ui.jsview("espm-ui-shopping-web.productDetail", {
 		oButton.setEnabled(true);
 		oButton = oActionGroup.addToCartButton;
 		oButton.setEnabled(true);
+		
+		// [mod_start] publish event
+		var oEventBus = sap.ui.getCore().getEventBus();
+		oEventBus.publish("sap.app", "selectedProductIdChanged", null);
+		// [mod_end] publish event
 	},
 
 	/**

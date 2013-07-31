@@ -153,6 +153,12 @@
 								<include>com.sap.ui5*.*</include>
 							</includes>
 						</fileset>
+						<fileset>
+							<directory>${project.basedir}/../deploy</directory>
+							<includes>
+								<include>*.war</include>
+							</includes>
+						</fileset>
 					</filesets>
 				</configuration>
 			</plugin>

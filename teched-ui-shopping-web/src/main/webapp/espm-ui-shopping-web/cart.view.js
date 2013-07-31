@@ -11,7 +11,7 @@ sap.ui.jsview("espm-ui-shopping-web.cart", {
 		var oRowRepeater= new sap.ui.commons.RowRepeater({
 			id: "shopping-cart-rr",
 			title: new sap.ui.commons.Title({
-				icon: "images/icon.cart.24x24.png",
+				icon: gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/images/icon.cart.24x24.png"),
 				text: "{i18n>SHOPPING_CART_TITLE}"
 			}),
 			width: "100%",

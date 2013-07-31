@@ -7,10 +7,51 @@
  *  - instantiate main product model
  */
 
+function adjustUI5ModelToCloudPortal() {
+	// OData model adjustments to run inside CP
+	sap.ui.model.odata.ODataModel.prototype._createRequest = function (p, u, a, c) {
+	    var U = this.sServiceUrl;
+	    if (p) {
+	        if (!jQuery.sap.startsWith(p, '/')) {
+	            U += '/'
+	        }
+	        U += p
+	    }
+	    if (!u) {
+	        u = []
+	    }
+	    if (this.sUrlParams) {
+	        u.push(this.sUrlParams)
+	    }
+	    if (u.length > 0) {
+	        U += '?' + u.join('&')
+	    }
+	    if (c === undefined) {
+	        c = true
+	    }
+	    if (c === false) {
+	        var t = jQuery.now();
+	        var r = U.replace(/([?&])_=[^&]*/, '$1_=' + t);
+	        U = r + ((r === U) ? (/\?/.test(U) ? '&' : '?') + '_=' + t : '')
+	    }
+	    var C = {};
+	    jQuery.extend(C, this.mCustomHeaders, this.oHeaders);
+
+	    return {
+	    	requestUri:gadgets.io.getProxyUrl("") + encodeURIComponent(U), 
+	    	headers:C, 
+	    	async:a, 
+	    	user:this.sUser, 
+	    	password:this.sPassword
+	    }
+	};
+}
+
+
 function init()
 {
-	
-var baseURL = "https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-shopping-web/";
+
+var baseURL = host + "/teched-ui-shopping-web/";
 
 jQuery.sap.registerModulePath("app", "js");
 
@@ -29,14 +70,14 @@ jQuery.sap.require("composite.productActions");
 // Internationalization:
 // create global i18n resource bundle for texts in application UI
 sap.app.i18n = new sap.ui.model.resource.ResourceModel({
-	bundleUrl: baseURL + "i18n/i18n.properties",
+	bundleUrl: gadgets.io.getProxyUrl(baseURL + "i18n/i18n.properties"),
 	locale: sap.ui.getCore().getConfiguration().getLanguage()
 });
 sap.ui.getCore().setModel(sap.app.i18n, "i18n");
 
 // create global i18n resource bundle for country names
 sap.app.countryBundle = jQuery.sap.resources({
-	url : baseURL + "i18n/countries.properties",
+	url : gadgets.io.getProxyUrl(baseURL + "i18n/countries.properties"),
 	locale: sap.ui.getCore().getConfiguration().getLanguage()
 });
 
@@ -51,7 +92,7 @@ sap.app.product.categoryFilter = null;
 sap.app.product.nameSorter = new sap.ui.model.Sorter("Name", false);
 
 // instantiate initial view with a shell
-jQuery.sap.registerModulePath(sap.app.config.viewNamespace, baseURL + sap.app.config.viewNamespace);
+jQuery.sap.registerModulePath(sap.app.config.viewNamespace, gadgets.io.getProxyUrl(baseURL + sap.app.config.viewNamespace));
 //sap.ui.localResources(sap.app.config.viewNamespace);
 var oMainView = sap.ui.view({
 	id:"main-shell",
@@ -143,6 +184,7 @@ sap.ui.model.odata.ODataListBinding.extend("ExtendedListBinding", {
 });
 
 jQuery.sap.require("sap.ui.model.odata.ODataModel");
+adjustUI5ModelToCloudPortal();
 sap.ui.model.odata.ODataModel.extend("ExtendedOdataModel", {
 	constructor : function(sServiceUrl, bJSON, sUser, sPassword) {
 		sap.ui.model.odata.ODataModel.apply(this, arguments); // call super-constructor
@@ -157,10 +199,11 @@ sap.ui.model.odata.ODataModel.extend("ExtendedOdataModel", {
 });
 
 //get business data from OData service
+var backendDestinationUrl = host + "/teched-ui-shopping-web/proxy/" + sap.app.utility.getBackendDestination();
 if (sap.app.localStorage.getPreference(sap.app.localStorage.PREF_USE_ABAP_BACKEND)) {
-	sap.app.odatamodel = new sap.ui.model.odata.ODataModel("https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-shopping-web/proxy/" + sap.app.utility.getBackendDestination(), true);
+	sap.app.odatamodel = new sap.ui.model.odata.ODataModel(backendDestinationUrl, true);
 } else {
-	sap.app.odatamodel = new ExtendedOdataModel("https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-shopping-web/proxy/" + sap.app.utility.getBackendDestination(), true);
+	sap.app.odatamodel = new ExtendedOdataModel(backendDestinationUrl, true);
 }
 
 //ensure that CSRF token is not taken from cache
@@ -175,7 +218,7 @@ sap.ui.getCore().setModel(sap.app.odatamodel);
 sap.app.odatamodel.read("/ProductCategories", null, null, false, sap.app.readOdata.readCategoriesSuccess, sap.app.readOdata.readError);
 
 // get extension business data (product reviews related data)
-sap.app.extensionodatamodel = new sap.ui.model.odata.ODataModel("https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-reviews-web/proxy/" + sap.app.utility.getExtensionBackendDestination());
+sap.app.extensionodatamodel = new sap.ui.model.odata.ODataModel(gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/proxy/" + sap.app.utility.getExtensionBackendDestination()));
 sap.app.extensionodatamodel.attachRequestCompleted(this, sap.app.readExtensionOData.extensionRequestCompleted);
 
 // set model to core as extensionodatamodel

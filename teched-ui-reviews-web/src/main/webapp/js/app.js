@@ -5,10 +5,50 @@
  * instantiate main product model
  */
 
+function adjustUI5ModelToCloudPortal() {
+	// OData model adjustments to run inside CP
+	sap.ui.model.odata.ODataModel.prototype._createRequest = function (p, u, a, c) {
+	    var U = this.sServiceUrl;
+	    if (p) {
+	        if (!jQuery.sap.startsWith(p, '/')) {
+	            U += '/'
+	        }
+	        U += p
+	    }
+	    if (!u) {
+	        u = []
+	    }
+	    if (this.sUrlParams) {
+	        u.push(this.sUrlParams)
+	    }
+	    if (u.length > 0) {
+	        U += '?' + u.join('&')
+	    }
+	    if (c === undefined) {
+	        c = true
+	    }
+	    if (c === false) {
+	        var t = jQuery.now();
+	        var r = U.replace(/([?&])_=[^&]*/, '$1_=' + t);
+	        U = r + ((r === U) ? (/\?/.test(U) ? '&' : '?') + '_=' + t : '')
+	    }
+	    var C = {};
+	    jQuery.extend(C, this.mCustomHeaders, this.oHeaders);
+
+	    return {
+	    	requestUri:gadgets.io.getProxyUrl("") + encodeURIComponent(U), 
+	    	headers:C, 
+	    	async:a, 
+	    	user:this.sUser, 
+	    	password:this.sPassword
+	    }
+	};
+}
+
 function init()
 {
 	
-var baseURL = "https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-reviews-web/";
+var baseURL = host + "/teched-ui-reviews-web/";
 
 jQuery.sap.registerModulePath("app", "js");
 jQuery.sap.require("app.config");
@@ -16,21 +56,20 @@ jQuery.sap.require("app.utility");
 
 // Internationalization: Create global i18n resource bundle for texts in application UI
 sap.app.i18n = new sap.ui.model.resource.ResourceModel({
-	bundleUrl : baseURL + "i18n/i18n.properties",
+	bundleUrl : gadgets.io.getProxyUrl(baseURL + "i18n/i18n.properties"),
 	locale : sap.ui.getCore().getConfiguration().getLanguage()
 });
 sap.ui.getCore().setModel(sap.app.i18n, "i18n");
 
 // create global i18n resource bundle for country names
 sap.app.countryBundle = jQuery.sap.resources({
-	url : baseURL + "i18n/countries.properties",
+	url : gadgets.io.getProxyUrl(baseURL + "i18n/countries.properties"),
 	locale : sap.ui.getCore().getConfiguration().getLanguage()
 });
 
 // instantiate initial view with a shell
+jQuery.sap.registerModulePath(sap.app.config.viewNamespace, gadgets.io.getProxyUrl(baseURL + sap.app.config.viewNamespace));
 //sap.ui.localResources(sap.app.config.viewNamespace);
-jQuery.sap.registerModulePath(sap.app.config.viewNamespace, baseURL + sap.app.config.viewNamespace);
-
 var oMainView = sap.ui.view({
 	id : "main-shell",
 	viewName : "espm-ui-reviews-web.main",
@@ -38,7 +77,9 @@ var oMainView = sap.ui.view({
 });
 
 // get OData Model from server, using JSON format
-sap.app.odatamodel = new sap.ui.model.odata.ODataModel("https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-reviews-web/proxy/" + sap.app.utility.getBackendDestination(), true);
+jQuery.sap.require("sap.ui.model.odata.ODataModel");
+adjustUI5ModelToCloudPortal();
+sap.app.odatamodel = new sap.ui.model.odata.ODataModel(host + "/teched-ui-reviews-web/proxy/" + sap.app.utility.getBackendDestination(), true);
 sap.app.odatamodel.setCountSupported(false);
 sap.app.odatamodel.attachRequestCompleted(this, sap.app.readOdata.requestCompleted);
 
@@ -54,7 +95,7 @@ sap.app.odatamodel.read("/ProductCategories", null, null, false, sap.app.readOda
 		sap.app.readOdata.readError);
 
 // get extension business data (product reviews related data)
-sap.app.extensionodatamodel = new sap.ui.model.odata.ODataModel("https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-reviews-web/proxy/" + sap.app.utility.getExtensionBackendDestination());
+sap.app.extensionodatamodel = new sap.ui.model.odata.ODataModel(gadgets.io.getProxyUrl(host + "/teched-ui-reviews-web/proxy/" + sap.app.utility.getExtensionBackendDestination()));
 
 // set model to core as extensionodatamodel
 sap.ui.getCore().setModel(sap.app.extensionodatamodel, "extensionodatamodel");

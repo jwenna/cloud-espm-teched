@@ -1,45 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>  
 <Module>  
     <ModulePrefs title="ESPM Customer Review Extension" height="250">  
-        <Require feature="pubsub-2" />  
         <Require feature="sap-context" /> 
-        <Require feature="sap-ui5">
-			<Param name="sap-ui-params">
-            {
-                "namespaces" : 
-                [
-	                {
-	                	"name" : "app",
-	                    "location" : "https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-reviews-web/js"
-	                },
-	                {
-	                	"name" : "app.config",
-	                    "location" : "https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-reviews-web/js/config"
-	                },
-	                {
-	                	"name" : "app.utility",
-	                    "location" : "https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-reviews-web/js/utility"
-	                },
-	                {
-	                	"name" : "espm-ui-reviews-web",
-	                    "location" : "https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-reviews-web/espm-ui-reviews-web"
-	                },
-	                {
-	                	"name" : "i18n",
-	                    "location" : "https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-reviews-web/i18n"
-	                },
-	                {
-	                	"name" : "proxy",
-	                    "location" : "https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-reviews-web/proxy"
-	                }
-                ]
-            }
-            </Param>
-		</Require> 
+		<Optional feature="content-rewrite">
+	      <Param name="exclude-urls">.*</Param>
+	    </Optional>
     </ModulePrefs>  
 	
     <Content type="html">  
         <![CDATA[  
+        
+        <script id="sap-ui-bootstrap"
+	        src="https://sapui5.netweaver.ondemand.com/resources/sap-ui-core.js"
+	        data-sap-ui-theme="sap_goldreflection"
+	        data-sap-ui-libs="sap.ui.commons, sap.ui.commons, sap.m, sap.ui.ux3"></script>
+        
+        <script type="text/javascript">
+		
+		var host = "https://techedi064832trial.hanatrial.ondemand.com";
+		
+        // Configure namespaces for UI5
+		jQuery.sap.registerModulePath("app", gadgets.io.getProxyUrl(host + "/teched-ui-reviews-web/js"));
+		jQuery.sap.registerModulePath("app.config", gadgets.io.getProxyUrl(host + "/teched-ui-reviews-web/js/config"));
+		jQuery.sap.registerModulePath("app.utility", gadgets.io.getProxyUrl(host + "/teched-ui-reviews-web/js/utility"));
+		jQuery.sap.registerModulePath("espm-ui-reviews-web", gadgets.io.getProxyUrl(host + "/teched-ui-reviews-web/espm-ui-reviews-web"));
+		jQuery.sap.registerModulePath("i18n", gadgets.io.getProxyUrl(host + "/teched-ui-reviews-web/i18n"));
+		jQuery.sap.registerModulePath("proxy", gadgets.io.getProxyUrl(host + "/teched-ui-reviews-web/proxy"));
+
+		</script>
 
 <body class="sapUiBody" role="application" >
 	<div id='content'></div>
@@ -50,8 +38,6 @@
   
 	    var subId;  
 	    var isSub = false;  
-	  
-	  	
 	  
 	    function updateReviews(topic, context) 
 	    {  

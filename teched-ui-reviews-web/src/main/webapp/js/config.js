@@ -25,8 +25,8 @@ sap.app.config = {
 	displayAbapUser : "ESPM_TEST",
 	displayAbapPassword : "Espm1234",
 
-	abapImagesBaseUrl : "https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-reviews-web/",
-	cloudImagesBaseUrl : "https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-reviews-web/espm-model-web/images/",
+	abapImagesBaseUrl : host + "/teched-ui-reviews-web/",
+	cloudImagesBaseUrl : host + "/teched-ui-reviews-web/espm-model-web/images/",
 
-	productPlaceholderImg : "https://grannyd039236trial.hanatrial.ondemand.com/teched-ui-reviews-web/images/placeholder.product.150x150.png",
+	productPlaceholderImg : gadgets.io.getProxyUrl(host + "/teched-ui-reviews-web/images/placeholder.product.150x150.png"),
 };

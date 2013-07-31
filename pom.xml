@@ -30,11 +30,11 @@
 		<browser.proxy.settings>-Dhttp.proxyHost=${proxy.host} -Dhttp.proxyPort=${proxy.port} -Dhttps.proxyHost=${proxy.host} -Dhttps.proxyPort=${proxy.port}</browser.proxy.settings>
 	
 		<!-- Properties that hold information on the location and version of the SAP HANA Cloud SDK -->
-		<sap.cloud.sdk.version>1.28.3</sap.cloud.sdk.version>
+		<sap.cloud.sdk.version>1.32.23</sap.cloud.sdk.version>
 		<sap.cloud.sdk.path>${env.NW_CLOUD_SDK_PATH}</sap.cloud.sdk.path>
 
 		<!-- Properties needed to reference sapui5 -->
-		<sap.cloud.ui5.version>1.12.1</sap.cloud.ui5.version>
+		<sap.cloud.ui5.version>1.12.5</sap.cloud.ui5.version>
 		<eclipse.path>${env.ECLIPSE_HOME}</eclipse.path>
 
 		<!-- Properties that hold the local server information required for local 
@@ -45,7 +45,7 @@
 		<!-- Property that holds the source path to the backend destinations -->
 		<destinations.path>${basedir}/../destinations</destinations.path>
 
-		<persistence.osgi.hdb.platform.version>0.6.10</persistence.osgi.hdb.platform.version>
+		<persistence.osgi.hdb.platform.version>0.6.17</persistence.osgi.hdb.platform.version>
 	</properties>
 
 	<modules>
@@ -55,13 +55,56 @@
 		<module>teched-model-extension-web</module>
 	</modules>
 
-	<repositories>
+	<!-- repositories>
 		<repository>
 			<id>EclipseLink</id>
 			<url>http://download.eclipse.org/rt/eclipselink/maven.repo</url>
 		</repository>
-	</repositories>
-
+	</repositories-->
+  <repositories>
+        <repository>
+            <id>3rd-party.milestones.manual-uploads.hosted</id>
+            <url>http://nexus.wdf.sap.corp:8081/nexus/content/repositories/3rd-party.milestones.manual-uploads.hosted</url>
+        </repository>
+		<repository>
+            <id>3rd-party.releases.maven-central.proxy</id>
+            <url>http://nexus.wdf.sap.corp:8081/nexus/content/repositories/3rd-party.releases.maven-central.proxy</url>
+        </repository>
+        <repository>
+            <id>milestones.com.sap.labs.odp</id>
+            <url>http://nexus.wdf.sap.corp:8081/nexus/content/repositories/deploy.milestones/</url>
+        </repository>
+        <repository>
+            <id>build.releases.repo</id>
+            <url>http://nexus.wdf.sap.corp:8081/nexus/content/groups/build.releases/</url>
+        </repository>
+        <repository>
+            <id>build.milestones.repo</id>
+            <url>http://nexus.wdf.sap.corp:8081/nexus/content/groups/build.milestones/</url>
+        </repository>
+        <repository>
+            <id>build.snapshots.repo</id>
+            <url>http://nexus.wdf.sap.corp:8081/nexus/content/groups/build.snapshots/</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>snapshots.com.sap.labs.odp</id>
+            <url>http://nexus.wdf.sap.corp:8081/nexus/content/repositories/deploy.snapshots/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>build.releases.repo</id>
+            <url>http://nexus.wdf.sap.corp:8081/nexus/content/groups/build.releases/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>build.milestones.repo</id>
+            <url>http://nexus.wdf.sap.corp:8081/nexus/content/groups/build.milestones/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>build.snapshots.repo</id>
+            <url>http://nexus.wdf.sap.corp:8081/nexus/content/groups/build.snapshots/</url>
+        </pluginRepository>
+    </pluginRepositories>
 	<dependencies>
 		<!-- Test dependencies -->
 		<dependency>

@@ -5,22 +5,81 @@
  * instantiate main product model
  */
 
+function adjustUI5ModelToCloudPortal() 
+{
+	// OData model adjustments to run inside CP
+	sap.ui.model.odata.ODataModel.prototype._createRequest = function (p, u, a, c) 
+	{
+	    var U = this.sServiceUrl;
+	    
+	    if (p) 
+	    {
+	        if (!jQuery.sap.startsWith(p, '/')) 
+	        {
+	            U += '/'
+	        }
+	        U += p
+	    }
+	    
+	    if (!u) 
+	    {
+	        u = []
+	    }
+	    
+	    if (this.sUrlParams) 
+	    {
+	        u.push(this.sUrlParams)
+	    }
+	    
+	    if (u.length > 0) 
+	    {
+	        U += '?' + u.join('&')
+	    }
+	    
+	    if (c === undefined) 
+	    {
+	        c = true
+	    }
+	    
+	    if (c === false) 
+	    {
+	        var t = jQuery.now();
+	        var r = U.replace(/([?&])_=[^&]*/, '$1_=' + t);
+	        U = r + ((r === U) ? (/\?/.test(U) ? '&' : '?') + '_=' + t : '')
+	    }
+	    
+	    var C = {};
+	    jQuery.extend(C, this.mCustomHeaders, this.oHeaders);
+
+	    return {
+	    	requestUri:gadgets.io.getProxyUrl("") + encodeURIComponent(U), 
+	    	headers:C, 
+	    	async:a, 
+	    	user:this.sUser, 
+	    	password:this.sPassword
+	    }
+	};
+}
+
+function getUrl(url)
+{
+	return gadgets.io.getProxyUrl(host + "/teched-ui-reviews-web/" + url);
+}
+
 function init()
 {
-	jQuery.sap.registerModulePath('app', 'portal/js');
-	
 	jQuery.sap.require("app.config");
 	jQuery.sap.require("app.utility");
 	
 	// Internationalization: Create global i18n resource bundle for texts in application UI
 	sap.app.i18n = new sap.ui.model.resource.ResourceModel({
-		bundleUrl : sap.app.config.baseURL + "i18n/i18n.properties",
+		bundleUrl : getUrl("i18n/i18n.properties"),
 		locale : sap.ui.getCore().getConfiguration().getLanguage()
 	});
 	sap.ui.getCore().setModel(sap.app.i18n, "i18n");
 	
 	// instantiate initial view with a shell
-	jQuery.sap.registerModulePath(sap.app.config.viewNamespace, sap.app.config.baseURL + sap.app.config.viewNamespace);
+	//sap.ui.localResources(sap.app.config.viewNamespace);
 	var oMainView = sap.ui.view({
 		id : "main-shell",
 		viewName : "espm-ui-reviews-web.main",
@@ -28,7 +87,7 @@ function init()
 	});
 	
 	// get OData Model from server, using JSON format
-	sap.app.odatamodel = new sap.ui.model.odata.ODataModel(sap.app.config.proxyURL + sap.app.utility.getBackendDestination(), true);
+	sap.app.odatamodel = new sap.ui.model.odata.ODataModel(host + "/teched-ui-reviews-web/" + "proxy/" + sap.app.utility.getBackendDestination(), true);
 	sap.app.odatamodel.setCountSupported(false);
 	sap.app.odatamodel.attachRequestCompleted(this, sap.app.readOdata.requestCompleted);
 	
@@ -43,7 +102,7 @@ function init()
 	sap.app.odatamodel.read("/ProductCategories", null, null, false, sap.app.readOdata.readCategoriesSuccess, sap.app.readOdata.readError);
 	
 	// get extension business data (product reviews related data)
-	sap.app.extensionodatamodel = new sap.ui.model.odata.ODataModel(sap.app.config.proxyURL + sap.app.utility.getExtensionBackendDestination());
+	sap.app.extensionodatamodel = new sap.ui.model.odata.ODataModel(host + "/teched-ui-reviews-web/" + "proxy/" + sap.app.utility.getExtensionBackendDestination());
 	
 	// set model to core as extensionodatamodel
 	sap.ui.getCore().setModel(sap.app.extensionodatamodel, "extensionodatamodel");
@@ -52,5 +111,4 @@ function init()
 	oMainView.placeAt("content");
 }
 
-// trigger the execution of the init() script once the portal RT is ready
 gadgets.util.registerOnLoadHandler(init);

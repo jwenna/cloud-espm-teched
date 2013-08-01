@@ -1,94 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>  
 <Module>  
     <ModulePrefs title="ESPM Customer Review Extension" height="250">  
-        <Require feature="pubsub-2" />  
         <Require feature="sap-context" /> 
-        <Require feature="sap-ui5">
-			<Param name="sap-ui-params">
-            {
-                "namespaces" : 
-                [
-	                {
-	                	"name" : "app",
-	                    "location" : "https://techedespmd039236trial.hanatrial.ondemand.com/teched-ui-reviews-web/portal/js"
-	                },
-	                {
-	                	"name" : "app.config",
-	                    "location" : "https://techedespmd039236trial.hanatrial.ondemand.com/teched-ui-reviews-web/portal/js/config"
-	                },
-	                {
-	                	"name" : "app.utility",
-	                    "location" : "https://techedespmd039236trial.hanatrial.ondemand.com/teched-ui-reviews-web/portal/js/utility"
-	                },
-	                {
-	                	"name" : "espm-ui-reviews-web",
-	                    "location" : "https://techedespmd039236trial.hanatrial.ondemand.com/teched-ui-reviews-web/espm-ui-reviews-web"
-	                },
-	                {
-	                	"name" : "i18n",
-	                    "location" : "https://techedespmd039236trial.hanatrial.ondemand.com/teched-ui-reviews-web/i18n"
-	                },
-	                {
-	                	"name" : "proxy",
-	                    "location" : "https://techedespmd039236trial.hanatrial.ondemand.com/teched-ui-reviews-web/proxy"
-	                }
-                ]
-            }
-            </Param>
-		</Require> 
+		<Optional feature="content-rewrite">
+	      <Param name="exclude-urls">.*</Param>
+	    </Optional>
     </ModulePrefs>  
 
     <Content type="html">  
-        <![CDATA[  
-
-<body class="sapUiBody" role="application" >
-	<div id='content'></div>
-	
-	<script src="portal/js/app.js"></script>
-	
-	<script language="javascript" type="text/javascript">  
-  
-	    var subId;  
-	    var isSub = false;  
-	  
-	    function updateReviews(topic, context) 
-	    {  
-	       if ( context.getPropertyByKey("selectedKey") != null)
-	       {
-		       	var selectedKey = context.getPropertyByKey("selectedKey")[0];
-		       
-		       	var oEventBus = sap.ui.getCore().getEventBus();
-		       	oEventBus.publish("sap.app", "selectedProductIdChanged", selectedKey);
-		       
-		       	// make sure to update the productId combo box
-			   	sap.ui.getCore().byId("product-selection-dropdown-box-id").setSelectedKey(selectedKey);
-	 		}
-	    }  
-	  
-	    /* 
-	     * Subscribe to Site Context using sap-context feature. 
-	     */  
-	    function subscribe() 
-	    {  
-	        subId = gadgets.sapcontext.subscribe(updateReviews);  
-	    }  
-	  
-	    /* 
-	     * Unsubscribe to Site Context using sap-context feature. 
-	     */  
-	    function unsubscribe() 
-	    {  
-	        gadgets.sapcontext.unsubscribe(subId);  
-	        isSub = false;  
-	    }  
-	</script>  
+    <![CDATA[  
+        
+        <script id="sap-ui-bootstrap" src="https://sapui5.netweaver.ondemand.com/resources/sap-ui-core.js"
+	        data-sap-ui-theme="sap_goldreflection"
+	        data-sap-ui-libs="sap.ui.commons, sap.ui.commons, sap.m, sap.ui.ux3">
+	    </script>
+        
+        <script type="text/javascript">
 		
-	<script language="javascript" type="text/javascript">  
-              gadgets.sapcontext.registerOnContextLoad(subscribe);  
-    </script>  
+			var host = "https://techedespmd039236trial.hanatrial.ondemand.com";
+			
+	        // Configure namespaces for UI5
+			jQuery.sap.registerModulePath("app", gadgets.io.getProxyUrl(host + "/teched-ui-reviews-web/portal/js"));
+			jQuery.sap.registerModulePath("app.config", gadgets.io.getProxyUrl(host + "/teched-ui-reviews-web/portal/js/config"));
+			jQuery.sap.registerModulePath("app.utility", gadgets.io.getProxyUrl(host + "/teched-ui-reviews-web/js/utility"));
+			jQuery.sap.registerModulePath("espm-ui-reviews-web", gadgets.io.getProxyUrl(host + "/teched-ui-reviews-web/espm-ui-reviews-web"));
+			jQuery.sap.registerModulePath("i18n", gadgets.io.getProxyUrl(host + "/teched-ui-reviews-web/i18n"));
+			jQuery.sap.registerModulePath("proxy", gadgets.io.getProxyUrl(host + "/teched-ui-reviews-web/proxy"));
 
-</body>
- 
-]]>  
+		</script>
+
+		<body class="sapUiBody" role="application" >
+		
+			<script src="portal/js/app.js"></script>
+	
+			<script language="javascript" type="text/javascript">  
+		  
+			    var subId;  
+			    var isSub = false;  
+			  
+			    function updateReviews(topic, context) 
+			    {  
+			       if ( context.getPropertyByKey("selectedKey") != null)
+			       {
+				       	var selectedKey = context.getPropertyByKey("selectedKey")[0];
+				       
+				       	var oEventBus = sap.ui.getCore().getEventBus();
+				       	oEventBus.publish("sap.app", "selectedProductIdChanged", selectedKey);
+				       
+				       	// make sure to update the productId combo box
+					   	sap.ui.getCore().byId("product-selection-dropdown-box-id").setSelectedKey(selectedKey);
+			 		}
+			    }  
+			  
+			    /* 
+			     * Subscribe to Site Context using sap-context feature. 
+			     */  
+			    function subscribe() 
+			    {  
+			        subId = gadgets.sapcontext.subscribe(updateReviews);  
+			    }  
+			  
+			    /* 
+			     * Unsubscribe to Site Context using sap-context feature. 
+			     */  
+			    function unsubscribe() 
+			    {  
+			        gadgets.sapcontext.unsubscribe(subId);  
+			        isSub = false;  
+			    }  
+			    
+			</script>  
+				
+			<script language="javascript" type="text/javascript">  
+		              gadgets.sapcontext.registerOnContextLoad(subscribe);  
+		    </script>  
+
+			<div id='content'></div>
+		</body>
+	]]>  
     </Content>  
 </Module>  

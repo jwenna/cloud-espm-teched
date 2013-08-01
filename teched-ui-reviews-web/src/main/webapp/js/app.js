@@ -5,6 +5,13 @@
  * instantiate main product model
  */
 
+function getUrl(url)
+{
+	// simply return as is
+	return url;
+}
+
+
 jQuery.sap.registerModulePath('app', 'js');
 
 jQuery.sap.require("app.config");
@@ -12,7 +19,7 @@ jQuery.sap.require("app.utility");
 
 // Internationalization: Create global i18n resource bundle for texts in application UI
 sap.app.i18n = new sap.ui.model.resource.ResourceModel({
-	bundleUrl : "i18n/i18n.properties",
+	bundleUrl : getUrl("i18n/i18n.properties"),
 	locale : sap.ui.getCore().getConfiguration().getLanguage()
 });
 sap.ui.getCore().setModel(sap.app.i18n, "i18n");
@@ -26,7 +33,7 @@ var oMainView = sap.ui.view({
 });
 
 // get OData Model from server, using JSON format
-sap.app.odatamodel = new sap.ui.model.odata.ODataModel("proxy/" + sap.app.utility.getBackendDestination(), true);
+sap.app.odatamodel = new sap.ui.model.odata.ODataModel(getUrl("proxy/" + sap.app.utility.getBackendDestination()), true);
 sap.app.odatamodel.setCountSupported(false);
 sap.app.odatamodel.attachRequestCompleted(this, sap.app.readOdata.requestCompleted);
 
@@ -41,7 +48,7 @@ sap.ui.getCore().setModel(sap.app.odatamodel);
 sap.app.odatamodel.read("/ProductCategories", null, null, false, sap.app.readOdata.readCategoriesSuccess, sap.app.readOdata.readError);
 
 // get extension business data (product reviews related data)
-sap.app.extensionodatamodel = new sap.ui.model.odata.ODataModel("proxy/" + sap.app.utility.getExtensionBackendDestination());
+sap.app.extensionodatamodel = new sap.ui.model.odata.ODataModel(getUrl("proxy/" + sap.app.utility.getExtensionBackendDestination()));
 
 // set model to core as extensionodatamodel
 sap.ui.getCore().setModel(sap.app.extensionodatamodel, "extensionodatamodel");

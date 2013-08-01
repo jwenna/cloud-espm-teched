@@ -155,7 +155,7 @@
 						<fileset>
 							<directory>${project.basedir}/../deploy</directory>
 							<includes>
-								<include>*.war</include>
+								<include>${project.artifactId}.war</include>
 							</includes>
 						</fileset>
 					</filesets>

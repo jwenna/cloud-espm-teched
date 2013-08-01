@@ -8,50 +8,48 @@
     </ModulePrefs> 
 	
     <Content type="html">  
-        <![CDATA[
-	    <script id="sap-ui-bootstrap"
-	        src="https://sapui5.netweaver.ondemand.com/resources/sap-ui-core.js"
+    <![CDATA[
+	    <script id="sap-ui-bootstrap" src="https://sapui5.netweaver.ondemand.com/resources/sap-ui-core.js"
 	        data-sap-ui-theme="sap_goldreflection"
-	        data-sap-ui-libs="sap.ui.commons, sap.m, sap.ui.ux3"></script>
+	        data-sap-ui-libs="sap.ui.commons, sap.m, sap.ui.ux3">
+	    </script>
 	        
 		<script src="portal/js/app.js"></script>
 		
 		<body class="sapUiBody" role="application" >
 
-		<script type="text/javascript">
-			var host = "https://techedespmd039236trial.hanatrial.ondemand.com";
+			<script type="text/javascript">
 			
-			// Configure namespaces for UI5
-			jQuery.sap.registerModulePath("app", gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/js"));
-			jQuery.sap.registerModulePath("css", gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/css"));
-			jQuery.sap.registerModulePath("composite.productActions", gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/js/controls/productActions"));
-			jQuery.sap.registerModulePath("app.config", gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/js/config"));
-			jQuery.sap.registerModulePath("app.formatter", gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/js/formatter"));
-			jQuery.sap.registerModulePath("app.messages", gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/js/messages"));
-			jQuery.sap.registerModulePath("app.utility", gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/js/utility"));
-			jQuery.sap.registerModulePath("app.validator", gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/js/validator"));
-			jQuery.sap.registerModulePath("app.welcome", gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/js/welcome"));
-			jQuery.sap.registerModulePath("espm-ui-shopping-web", gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/espm-ui-shopping-web"));
-			jQuery.sap.registerModulePath("i18n", gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/i18n"));
-			jQuery.sap.registerModulePath("proxy", gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/proxy"));
-		</script>
-		
-		<script language="javascript" type="text/javascript">  
-    	
-	        var oEventBus = sap.ui.getCore().getEventBus();
-			oEventBus.subscribe("sap.app", "selectedProductIdChanged", function(channelId, eventId, selectedProductId) 
-			{
-				gadgets.sapcontext.publish("selectedKey", selectedProductId);  
-			});
-	  
-    	</script>  
-		
-		<div id='content'></div>
-		
-		
+				var host = "https://techedespmd039236trial.hanatrial.ondemand.com";
+				
+				// Configure namespaces for UI5
+				jQuery.sap.registerModulePath("app", gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/portal/js"));
+				jQuery.sap.registerModulePath("css", gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/css"));
+				jQuery.sap.registerModulePath("composite.productActions", gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/js/controls/productActions"));
+				jQuery.sap.registerModulePath("app.config", gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/js/config"));
+				jQuery.sap.registerModulePath("app.formatter", gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/js/formatter"));
+				jQuery.sap.registerModulePath("app.messages", gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/js/messages"));
+				jQuery.sap.registerModulePath("app.utility", gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/js/utility"));
+				jQuery.sap.registerModulePath("app.validator", gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/js/validator"));
+				jQuery.sap.registerModulePath("app.welcome", gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/js/welcome"));
+				jQuery.sap.registerModulePath("espm-ui-shopping-web", gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/espm-ui-shopping-web"));
+				jQuery.sap.registerModulePath("i18n", gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/i18n"));
+				jQuery.sap.registerModulePath("proxy", gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/proxy"));
+			</script>
+			
+			<script language="javascript" type="text/javascript">  
+	    	
+		        var oEventBus = sap.ui.getCore().getEventBus();
+				oEventBus.subscribe("sap.app", "selectedProductIdChanged", function(channelId, eventId, selectedProductId) 
+				{
+					gadgets.sapcontext.publish("selectedKey", selectedProductId);  
+				});
+		  
+	    	</script>  
+			
+			<div id='content'></div>
 		</body>
- 
-]]>  
+	]]>  
     </Content>  
 </Module>  
 

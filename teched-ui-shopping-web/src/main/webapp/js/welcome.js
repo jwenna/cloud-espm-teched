@@ -121,7 +121,7 @@ sap.account.WelcomeDialog.prototype.open = function() {
 		textView.addStyleClass("welcomeHeaderTextAlign");
 		var oHorizontalLayout = new sap.ui.commons.layout.HorizontalLayout({
 			content : [ new sap.ui.commons.Image({
-				src : gadgets.io.getProxyUrl("images/SAPLogo.gif")
+				src : getUrl("images/SAPLogo.gif")
 			}), textView ]
 		});
 		oCell.addContent(oHorizontalLayout);

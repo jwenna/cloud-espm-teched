@@ -36,12 +36,12 @@ sap.app.config = {
 	displayAbapPassword : "Espm1234",
 
 	// local JSON model provides customer, items and order for write access
-	orderModelUrl: gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/data/order.json"),
+	orderModelUrl: getUrl("data/order.json"),
 
 	// local JSON model provides countries for address data
-	countriesModelUrl : gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/data/countries.json"),
+	countriesModelUrl : getUrl("data/countries.json"),
 
-	productPlaceholderImg: gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/images/placeholder.product.150x150.png"),
+	productPlaceholderImg: getUrl("images/placeholder.product.150x150.png"),
 
 	// Symbol for Euro
 	currencySymbol: "\u20AC",

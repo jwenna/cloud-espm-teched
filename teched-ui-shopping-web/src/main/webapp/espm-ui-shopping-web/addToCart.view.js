@@ -12,7 +12,7 @@ sap.ui.jsview("espm-ui-shopping-web.addToCart", {
 					showCollapseIcon : false,
 					content : [ this.panelContentTemplate() ],
 					title : new sap.ui.commons.Title({
-						icon: gadgets.io.getProxyUrl(host + "/teched-ui-shopping-web/images/icon.cart.24x24.png"),
+						icon: getUrl("images/icon.cart.24x24.png"),
 						text: "{i18n>SHOPPING_CART_TITLE}",
 						width: "100%",
 					}),

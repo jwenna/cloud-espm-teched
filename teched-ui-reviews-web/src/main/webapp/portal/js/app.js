@@ -7,6 +7,8 @@
 
 function adjustUI5ModelToCloudPortal() 
 {
+	jQuery.sap.require("app.config");
+	
 	// OData model adjustments to run inside CP
 	sap.ui.model.odata.ODataModel.prototype._createRequest = function (p, u, a, c) 
 	{
@@ -52,18 +54,13 @@ function adjustUI5ModelToCloudPortal()
 	    jQuery.extend(C, this.mCustomHeaders, this.oHeaders);
 
 	    return {
-	    	requestUri:gadgets.io.getProxyUrl("") + encodeURIComponent(U), 
+	    	requestUri: sap.app.config.getHostURL("") + encodeURIComponent(U), 
 	    	headers:C, 
 	    	async:a, 
 	    	user:this.sUser, 
 	    	password:this.sPassword
 	    }
 	};
-}
-
-function getUrl(url)
-{
-	return gadgets.io.getProxyUrl(host + "/teched-ui-reviews-web/" + url);
 }
 
 function init()

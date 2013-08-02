@@ -19,20 +19,30 @@
 		
 			var host = "https://techedespmd039236trial.hanatrial.ondemand.com";
 			
-	        // Configure namespaces for UI5
-			jQuery.sap.registerModulePath("app", gadgets.io.getProxyUrl(host + "/teched-ui-reviews-web/portal/js"));
-			jQuery.sap.registerModulePath("app.config", gadgets.io.getProxyUrl(host + "/teched-ui-reviews-web/portal/js/config"));
-			jQuery.sap.registerModulePath("app.utility", gadgets.io.getProxyUrl(host + "/teched-ui-reviews-web/js/utility"));
-			jQuery.sap.registerModulePath("espm-ui-reviews-web", gadgets.io.getProxyUrl(host + "/teched-ui-reviews-web/espm-ui-reviews-web"));
-			jQuery.sap.registerModulePath("i18n", gadgets.io.getProxyUrl(host + "/teched-ui-reviews-web/i18n"));
-			jQuery.sap.registerModulePath("proxy", gadgets.io.getProxyUrl(host + "/teched-ui-reviews-web/proxy"));
-
+			function getUrl(url)
+			{
+				return gadgets.io.getProxyUrl(host + "/teched-ui-reviews-web/" + url);
+			}
+			
+	        // configure namespaces for UI5
+			jQuery.sap.registerModulePath("app", getUrl("portal/js"));
+			jQuery.sap.registerModulePath("app.config", getUrl("js/config"));
+			jQuery.sap.registerModulePath("app.utility", getUrl("js/utility"));
+			jQuery.sap.registerModulePath("espm-ui-reviews-web", getUrl("espm-ui-reviews-web"));
+			jQuery.sap.registerModulePath("i18n", getUrl("i18n"));
+			jQuery.sap.registerModulePath("proxy", getUrl("proxy"));
+			
+			// initialize view layout as required for embedded usage
+			jQuery.sap.require("app.config");
+			sap.app.config.displayProductSelectionPanel = false;
+			sap.app.config.displayShell= false;
+			
 		</script>
+		
+		<script src="portal/js/app.js"></script>
 
 		<body class="sapUiBody" role="application" >
 		
-			<script src="portal/js/app.js"></script>
-	
 			<script language="javascript" type="text/javascript">  
 		  
 			    var subId;  

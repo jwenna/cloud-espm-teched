@@ -31,6 +31,15 @@ sap.ui.jsview("espm-ui-reviews-web.main", {
 					text : "{i18n>SHELL_WORKSET_ITEM_CUSTOMER_REVIEWS}"
 				}) ]
 			});
+			
+			var oSettingsButton = new sap.ui.commons.Button({
+				text : "{i18n>SHELL_HEADER_ITEM_SETTINGS_TEXT}",
+				tooltip : "{i18n>SHELL_HEADER_ITEM_SETTINGS_TOOLTIP}",
+				press : function(oEvent) {
+					oController.openSettingsDialog();
+				}
+			});
+			oShell.addHeaderItem(oSettingsButton);
 
 			// initial shell content
 			oShell.addContent(oView);

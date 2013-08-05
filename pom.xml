@@ -35,6 +35,20 @@
 		<sap.odata.processor.version>0.6.0</sap.odata.processor.version>
 		<!-- use 'com.sap.odata' when testing released version 0.6.0 -->
 		<sap.odata.groupId>com.sap.odata</sap.odata.groupId>
+		
+		<!-- Properties that hold host and port of proxy if you have one. Otherwise set local.server.proxy.settings and browser.proxy.settings values empty -->
+		<local.server.proxy.settings>--httpProxyHost proxy --httpProxyPort 8080 --httpsProxyHost proxy --httpsProxyPort 8080</local.server.proxy.settings>
+		<browser.proxy.settings>-Dhttp.proxyHost=proxy -Dhttp.proxyPort=8080 -Dhttps.proxyHost=proxy -Dhttps.proxyPort=8080</browser.proxy.settings>
+		
+		
+		<!-- Properties that hold information on the location and version of the SAP HANA Cloud SDK -->
+		<sap.cloud.sdk.version>1.28.3</sap.cloud.sdk.version>
+		<sap.cloud.sdk.path>${env.NW_CLOUD_SDK_PATH}</sap.cloud.sdk.path>
+
+		<!-- Properties needed to reference sapui5 -->
+		<sap.cloud.ui5.version>1.12.5</sap.cloud.ui5.version>
+		<eclipse.path>${env.ECLIPSE_HOME}</eclipse.path>
+		
 	</properties>
 
 	<modules>

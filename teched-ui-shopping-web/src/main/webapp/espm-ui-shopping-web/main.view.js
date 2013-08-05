@@ -6,6 +6,7 @@ sap.ui.jsview("espm-ui-shopping-web.main", {
 
 	/**
 	 * createContent: instantiate the shell which is the main container embedding all other content
+	 * 
 	 * @param oController
 	 * @returns {sap.ui.ux3.Shell}
 	 */
@@ -17,30 +18,28 @@ sap.ui.jsview("espm-ui-shopping-web.main", {
 			appTitle : "{i18n>SHELL_HEADER_TITLE}",
 			showLogoutButton : true,
 			showSearchTool : false,
-			showInspectorTool : false,
 			showFeederTool : false,
 			showTools : true,
 			showPane : true,
 			paneWidth : 500,
 			notificationBar : new sap.ui.ux3.NotificationBar({
-				messageNotifier : sap.ui.ux3.Notifier({messageSelected :  sap.app.messages.handleMessageSelected })
-			}),
-			worksetItems : [
-				new sap.ui.ux3.NavigationItem({
-					id : "nav-shopping",
-					text : "{i18n>SHELL_WORKSET_SHOPPING}"
-				}),
-				new sap.ui.ux3.NavigationItem({
-					id : "nav-checkout",
-					text : "{i18n>SHELL_WORKSET_CHECKOUT}",
+				messageNotifier : sap.ui.ux3.Notifier({
+					messageSelected : sap.app.messages.handleMessageSelected
 				})
-			],
+			}),
+			worksetItems : [ new sap.ui.ux3.NavigationItem({
+				id : "nav-shopping",
+				text : "{i18n>SHELL_WORKSET_SHOPPING}"
+			}), new sap.ui.ux3.NavigationItem({
+				id : "nav-checkout",
+				text : "{i18n>SHELL_WORKSET_CHECKOUT}",
+			}) ],
 			paneBarItems : [ this.getShoppingCartPaneBarItem(oController) ],
 			// Just one pane bar item, no need for switch
-			paneContent : oController.getCachedView("cart"),
+			paneContent : sap.app.viewCache.get("cart"),
 		});
 
-		if(sap.app.localStorage.getPreference(sap.app.localStorage.PREF_DISPLAY_CUSTOMER_REVIEWS)){
+		if (sap.app.localStorage.getPreference(sap.app.localStorage.PREF_DISPLAY_CUSTOMER_REVIEWS)) {
 			oShell.addWorksetItem(new sap.ui.ux3.NavigationItem({
 				id : "nav-reviews",
 				text : "{i18n>SHELL_WORKSET_ITEM_CUSTOMER_REVIEWS}"
@@ -56,16 +55,16 @@ sap.ui.jsview("espm-ui-shopping-web.main", {
 		});
 		oShell.addHeaderItem(oSettingsButton);
 
-		// action when shell workset item  are clicked
+		// action when shell workset item are clicked
 		oShell.attachWorksetItemSelected(function(oEvent) {
 			var sViewName = oEvent.getParameter("id").replace("nav-", "");
-			oShell.setContent(oController.getCachedView(sViewName));
+			oShell.setContent(sap.app.viewCache.get(sViewName));
 		});
 
 		// initial shell content
-		oShell.addContent(oController.getCachedView("shopping"));
+		oShell.addContent(sap.app.viewCache.get("shopping"));
 
-		oShell.attachBrowserEvent("click", this.closeAddToCartPopup );
+		oShell.attachBrowserEvent("click", this.closeAddToCartPopup);
 
 		return oShell;
 
@@ -73,22 +72,24 @@ sap.ui.jsview("espm-ui-shopping-web.main", {
 
 	/**
 	 * closeAddToCartPopup: event handler for closing the add to cart popup if it is open
+	 * 
 	 * @param oEvent
 	 */
-	closeAddToCartPopup: function(oEvent){
+	closeAddToCartPopup : function(oEvent) {
 
-		if (sap.app.addToCartPopup && sap.app.addToCartPopup.isOpen()){
+		if (sap.app.addToCartPopup && sap.app.addToCartPopup.isOpen()) {
 			sap.app.addToCartPopup.close();
 		}
-		if (oEvent.target.id == "shopping-cart-panebar-item"){
-			if (sap.ui.getCore().byId("main").isPaneOpen() ){
+		if (oEvent.target.id == "shopping-cart-panebar-item") {
+			if (sap.ui.getCore().byId("main").isPaneOpen()) {
 				// the pane bar is about to close
-				// check if there are errors related to quantity, if so set the quantity back to the last valid value and remove the error messages
+				// check if there are errors related to quantity, if so set the quantity back to the last valid value
+				// and remove the error messages
 				var aMessages = sap.app.messages.getMessagesOfView("cart");
-				for (var i = 0; i < aMessages.length; i ++){
+				for ( var i = 0; i < aMessages.length; i++) {
 					var oMessage = aMessages[i];
 					var oTextField = sap.ui.getCore().byId(oMessage["Field"]);
-					if (oTextField){
+					if (oTextField) {
 						var context = oTextField.getBindingContext();
 						var prop = sap.ui.getCore().byId("shopping-cart-rr").getModel().getProperty(context.getPath());
 						oTextField.setValueState(sap.ui.core.ValueState.None);
@@ -102,6 +103,7 @@ sap.ui.jsview("espm-ui-shopping-web.main", {
 
 	/**
 	 * getShoppingCartPaneBarItem: create content of the shell panebar item
+	 * 
 	 * @param oController
 	 * @returns {sap.ui.core.Item}
 	 */
@@ -119,7 +121,7 @@ sap.ui.jsview("espm-ui-shopping-web.main", {
 	/**
 	 * Method called after the view is initialized.
 	 */
-	onAfterRendering: function() {
+	onAfterRendering : function() {
 		this.getController().openWelcomeDialog();
 	}
 

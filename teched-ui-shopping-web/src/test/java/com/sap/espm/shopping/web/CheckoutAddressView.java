@@ -14,18 +14,20 @@ public class CheckoutAddressView {
 	@FindBy(id = "address-email")
 	private WebElement emailInputField;
 
-	@FindBy(id = "existing_customer")
+	@FindBy(id = "rbg_customer-0")
 	private WebElement existingCustomerRadioButton;
 
-	@FindBy(id = "new_customer")
+	@FindBy(id = "rbg_customer-1")
 	private WebElement newCustomerRadioButton;
+
+	@FindBy(id = "countries-ddlb-input")
+	private WebElement countries;
 
 	public CheckoutAddressView(WebDriver webDriver) {
 		// initialize the webdriver
 		PageFactory.initElements(webDriver, this);
 		driver = webDriver;
 	}
-
 
 	public void enterEmail(String text) {
 		// enter the mail id
@@ -44,7 +46,6 @@ public class CheckoutAddressView {
 		existingCustomerRadioButton.click();
 	}
 
-
 	public boolean isAddressFormAvailable() {
 		// verify that the address field is available
 		if (driver.findElement(By.id("address-fields")) != null) {
@@ -54,4 +55,13 @@ public class CheckoutAddressView {
 		}
 	}
 
+	public boolean isCountryAvailable() {
+		// verify that the address field is available and dropdown listbox not empty
+		if (countries!=null && !countries.getAttribute("value").isEmpty()){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 }

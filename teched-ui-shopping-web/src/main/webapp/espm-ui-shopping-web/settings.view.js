@@ -186,8 +186,7 @@ sap.ui.jsview("espm-ui-shopping-web.settings", {
 		}));
 
 		var testLinkForABAP = '';
-		if (navigator.appName
-				&& navigator.appName === 'Microsoft Internet Explorer') {
+		if (navigator.appName && navigator.appName === 'Microsoft Internet Explorer') {
 			testLinkForABAP = sap.app.config.displayAbapOdataServiceUrl;
 		} else {
 			testLinkForABAP = sap.app.config.abapOdataServiceUrlWithLogin;

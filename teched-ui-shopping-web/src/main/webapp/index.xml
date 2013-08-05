@@ -11,12 +11,12 @@
     <![CDATA[
 	    <script id="sap-ui-bootstrap" src="https://sapui5.netweaver.ondemand.com/resources/sap-ui-core.js"
 	        data-sap-ui-theme="sap_goldreflection"
-	        data-sap-ui-libs="sap.ui.commons, sap.m, sap.ui.ux3">
+	        data-sap-ui-libs="sap.ui.commons, sap.ui.ux3, sap.ui.table">
 	    </script>
 	        
 	    <script type="text/javascript">
 			
-			var host = "https://techedespmd039236trial.hanatrial.ondemand.com";
+			var host = "https://espmp1863875835trial.hanatrial.ondemand.com";
 			
 			function getUrl(url)
 			{
@@ -25,7 +25,6 @@
 			
 			// configure namespaces for UI5
 			jQuery.sap.registerModulePath("app", getUrl("portal/js"));
-			jQuery.sap.registerModulePath("css", getUrl("css"));
 			jQuery.sap.registerModulePath("composite.productActions", getUrl("js/controls/productActions"));
 			jQuery.sap.registerModulePath("app.config", getUrl("js/config"));
 			jQuery.sap.registerModulePath("app.formatter", getUrl("js/formatter"));
@@ -36,17 +35,27 @@
 			jQuery.sap.registerModulePath("espm-ui-shopping-web", getUrl("espm-ui-shopping-web"));
 			jQuery.sap.registerModulePath("i18n", getUrl("i18n"));
 			jQuery.sap.registerModulePath("proxy", getUrl("proxy"));
-		
+			jQuery.sap.registerModulePath("app.localstorage", getUrl("js/localstorage"));
+			jQuery.sap.registerModulePath("app.viewcache", getUrl("js/viewcache"));
+			
 		</script>
 		
 		<script src="portal/js/app.js"></script>
+		
+		<script language="javascript" type="text/javascript">  
+			
+			 gadgets.util.registerOnLoadHandler(init);
+			
+		</script>
+		
+		<link rel="stylesheet" href="https://espmp1863875835trial.hanatrial.ondemand.com/teched-ui-shopping-web/css/styles.css">
 		
 		<body class="sapUiBody" role="application" >
 
 			<script language="javascript" type="text/javascript">  
 	    	
 		        var oEventBus = sap.ui.getCore().getEventBus();
-				oEventBus.subscribe("sap.app", "selectedProductIdChanged", function(channelId, eventId, selectedProductId) 
+				oEventBus.subscribe("sap.app", "selectedProductChanged", function(channelId, eventId, selectedProductId) 
 				{
 					gadgets.sapcontext.publish("selectedKey", selectedProductId);  
 				});

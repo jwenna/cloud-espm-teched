@@ -1,6 +1,3 @@
-/*
- * This module is used to display the welcome dialog
- */
 jQuery.sap.declare("sap.account.WelcomeDialog");
 
 sap.account.WelcomeDialog = function(oFrameController) {
@@ -46,8 +43,8 @@ sap.account.WelcomeDialog.prototype.open = function() {
 	oTextView = new sap.ui.commons.TextView({
 		text : "{i18n>DISCLAIMER_LABEL}",
 		design : sap.ui.commons.TextViewDesign.H2,
-		width: '100%',
-		textAlign: sap.ui.core.TextAlign.Center,
+		width : '100%',
+		textAlign : sap.ui.core.TextAlign.Center,
 	});
 	oCell.addContent(oTextView);
 	oRow.addCell(oCell);
@@ -62,7 +59,7 @@ sap.account.WelcomeDialog.prototype.open = function() {
 
 	oCell = new sap.ui.commons.layout.MatrixLayoutCell({
 		hAlign : sap.ui.commons.layout.HAlign.Left,
-		width: '100%'
+		width : '100%'
 	});
 	oTextView = new sap.ui.commons.TextView({
 		text : "{i18n>DISCLAIMER_TEXT}",
@@ -97,8 +94,8 @@ sap.account.WelcomeDialog.prototype.open = function() {
 	});
 
 	var ok = function(oEvent) {
-		sap.app.localStorage.storePreference(sap.app.localStorage.PREF_DISPLAY_WELCOME_DIALOG,
-				!oNotShowAgainChkBox.getChecked());
+		sap.app.localStorage.storePreference(sap.app.localStorage.PREF_DISPLAY_WELCOME_DIALOG, !oNotShowAgainChkBox
+				.getChecked());
 		oWelcomeDialog.close();
 	};
 	var okButton = new sap.ui.commons.Button("welcomePageOkButton", {

@@ -1,8 +1,3 @@
-/** formatter.js
- *
- *
- */
-
 jQuery.sap.declare("sap.app.formatter");
 
 jQuery.sap.require("sap.app.config");
@@ -20,18 +15,26 @@ sap.app.formatter = {
 	}),
 
 	productImage : function(src) {
-		if (!src) return sap.app.config.productPlaceholderImg;
-		return ("proxy/" + sap.app.utility.getBackendImagesDestination() + sap.app.utility.getImagesBaseUrl() + src);
+		if (!src) {
+			return sap.app.config.productPlaceholderImg;
+		}
+		return getUrl("proxy/" + sap.app.utility.getBackendImagesDestination() + sap.app.utility.getImagesBaseUrl()
+				+ src);
 	},
 
 	price : function(price) {
-		if (price !== 0 && !price) return;
+		if (price !== 0 && !price) {
+			return;
+		}
 		return sap.app.config.currencyFormat.replace("%1", sap.app.formatter.currencyFormat.format(price));
 	},
 
 	total : function(price) {
-		if (price !== 0 && !price) return;
-		return sap.app.i18n.getProperty("SHOPPING_CART_TOTAL") + " " + sap.app.config.currencyFormat.replace("%1", sap.app.formatter.currencyFormat.format(price));
+		if (price !== 0 && !price) {
+			return;
+		}
+		return sap.app.i18n.getProperty("SHOPPING_CART_TOTAL") + " "
+				+ sap.app.config.currencyFormat.replace("%1", sap.app.formatter.currencyFormat.format(price));
 	},
 
 	pluralize : function(n, singular, plural) {
@@ -41,46 +44,56 @@ sap.app.formatter = {
 		return n + " " + plural;
 	},
 
-	combinedCategoryCount: function (category) {
-		if (!category) return;
+	combinedCategoryCount : function(category) {
+		if (!category) {
+			return;
+		}
 		var count = this.getModel().getProperty("numberOfProducts", this.getBindingContext());
 		return category + " (" + count + ")";
 	},
 
-	combinedProductResultCount: function (text, count) {
-		if (count <= 0) return;
+	combinedProductResultCount : function(text, count) {
+		if (count <= 0) {
+			return;
+		}
 
 		return text + " (" + count + ")";
 	},
 
 	/**
-	 *  @description: replace all but the last for digits with asterisks
+	 * @description: replace all but the last for digits with asterisks
 	 */
-	obfuscateCreditCardNumber: function(sIn) {
-		if (!sIn) return;
+	obfuscateCreditCardNumber : function(sIn) {
+		if (!sIn) {
+			return;
+		}
 		sIn = sIn + ""; // convert input value to string, just in case
 		var sOut = "";
-		for (var i = 0; i < sIn.length - 4; i++) {
+		for ( var i = 0; i < sIn.length - 4; i++) {
 			sOut += "*";
 		}
 		sOut += sIn.substr(sIn.length - 4, 4);
 		return sOut;
 	},
 	/**
-	 *  @sSalesOrderId:  sales order id for confirmation page
+	 * @sSalesOrderId: sales order id for confirmation page
 	 */
 	confirmationOrder : function(sSalesOrderId) {
-		if (sSalesOrderId !== '' && !sSalesOrderId) return;
-		return sap.app.i18n.getProperty("MSG_SUCCESS_ORDER_CREATED").replace(/&1/,sSalesOrderId);
+		if (sSalesOrderId !== '' && !sSalesOrderId) {
+			return;
+		}
+		return sap.app.i18n.getProperty("MSG_SUCCESS_ORDER_CREATED").replace(/&1/, sSalesOrderId);
 	},
 	/**
-	 *  @salesOrderId:  sales order id for confirmation page
+	 * @salesOrderId: sales order id for confirmation page
 	 */
 	confirmationCustomer : function(sCustomerId) {
-		if (sCustomerId !== '' && !sCustomerId) return;
-		//var sEmail = this.getModel().getProperty("/customer/EmailAddress");
-		var sText = sap.app.i18n.getProperty("MSG_SUCCESS_ACCOUNT_CREATED").replace(/&1/,sCustomerId);
-		//sText = sText.replace(/&2/,sEmail);
+		if (sCustomerId !== '' && !sCustomerId) {
+			return;
+		}
+		// var sEmail = this.getModel().getProperty("/customer/EmailAddress");
+		var sText = sap.app.i18n.getProperty("MSG_SUCCESS_ACCOUNT_CREATED").replace(/&1/, sCustomerId);
+		// sText = sText.replace(/&2/,sEmail);
 		return sText;
 	},
 };

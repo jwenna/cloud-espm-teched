@@ -29,7 +29,7 @@ public class EspmShoppingWebUiIT {
 	 * Store name of currently executed test method in field.
 	 */
 	@Rule
-	public static TestName testName = new TestName();
+	public TestName testName = new TestName();
 	private static final String PRODUCT_SEARCH_STRING = "Laser";
 	private static String serverUrl;
 	private static String applicationRelPath;
@@ -183,7 +183,15 @@ public class EspmShoppingWebUiIT {
 			// the same applies to the proceed button
 			assertFalse(checkoutArea.isProceedButtonActive());
 
-			// enter the mail id as 'maria.brown@delbont.com'
+			// new customer testcase (address fields check only)
+			// String customerTestEmail = "customer.testemail@" + UUID.randomUUID().toString() + ".com";
+			checkoutAddressView.switchToNewCustomer();
+			assertTrue(checkoutAddressView.isAddressFormAvailable());
+			assertTrue(checkoutAddressView.isCountryAvailable());
+
+			// existing customer testcase (with email id as 'maria.brown@delbont.com')
+			checkoutAddressView.switchToExistingCustomer();
+
 			checkoutAddressView.enterEmail("maria.brown@delbont.com");
 
 			// now the next roadmap step should be enabled

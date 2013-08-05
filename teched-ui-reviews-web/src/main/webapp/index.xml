@@ -12,12 +12,12 @@
         
         <script id="sap-ui-bootstrap" src="https://sapui5.netweaver.ondemand.com/resources/sap-ui-core.js"
 	        data-sap-ui-theme="sap_goldreflection"
-	        data-sap-ui-libs="sap.ui.commons, sap.ui.commons, sap.m, sap.ui.ux3">
+	        data-sap-ui-libs="sap.ui.commons, sap.ui.ux3, sap.ui.table">
 	    </script>
         
         <script type="text/javascript">
 		
-			var host = "https://techedespmd039236trial.hanatrial.ondemand.com";
+			var host = "https://espmp1863875835trial.hanatrial.ondemand.com";
 			
 			function getUrl(url)
 			{
@@ -28,6 +28,8 @@
 			jQuery.sap.registerModulePath("app", getUrl("portal/js"));
 			jQuery.sap.registerModulePath("app.config", getUrl("js/config"));
 			jQuery.sap.registerModulePath("app.utility", getUrl("js/utility"));
+			jQuery.sap.registerModulePath("app.localstorage", getUrl("js/localstorage"));
+			jQuery.sap.registerModulePath("app.viewcache", getUrl("js/viewcache"));
 			jQuery.sap.registerModulePath("espm-ui-reviews-web", getUrl("espm-ui-reviews-web"));
 			jQuery.sap.registerModulePath("i18n", getUrl("i18n"));
 			jQuery.sap.registerModulePath("proxy", getUrl("proxy"));
@@ -37,9 +39,17 @@
 			sap.app.config.displayProductSelectionPanel = false;
 			sap.app.config.displayShell= false;
 			
+			sap.app.config.cloudExtensionOdataServiceUrl = (host + "/teched-ui-reviews-web/" + "espm.svc");
+			
 		</script>
 		
 		<script src="portal/js/app.js"></script>
+		
+		<script language="javascript" type="text/javascript">  
+			
+			gadgets.util.registerOnLoadHandler(init);
+
+		</script>
 
 		<body class="sapUiBody" role="application" >
 		
@@ -55,7 +65,7 @@
 				       	var selectedKey = context.getPropertyByKey("selectedKey")[0];
 				       
 				       	var oEventBus = sap.ui.getCore().getEventBus();
-				       	oEventBus.publish("sap.app", "selectedProductIdChanged", selectedKey);
+				       	oEventBus.publish("sap.app", "selectedProductChanged", { selectedProductId : selectedKey });
 				       
 				       	// make sure to update the productId combo box
 					   	sap.ui.getCore().byId("product-selection-dropdown-box-id").setSelectedKey(selectedKey);

@@ -20,13 +20,6 @@
 			<systemPath>${sap.cloud.sdk.path}/api/neo-sdk-core-api-${sap.cloud.sdk.version}.jar</systemPath>
 		</dependency>
 		<dependency>
-			<groupId>com.sap.core.persistence.osgi</groupId>
-			<artifactId>com.sap.core.persistence.osgi.hdb.platform</artifactId>
-			<version>${persistence.osgi.hdb.platform.version}</version>
-			<scope>system</scope>
-			<systemPath>${sap.cloud.sdk.path}/repository/plugins/com.sap.core.persistence.osgi.hdb.platform_${persistence.osgi.hdb.platform.version}.jar</systemPath>
-		</dependency>
-		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.0.1</version>
@@ -307,4 +300,5 @@
 			</build>
 		</profile>
 	</profiles>
+
 </project>

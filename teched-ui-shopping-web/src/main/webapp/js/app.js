@@ -1,84 +1,72 @@
-/** app.js
- *
- *  main application script
- *  - include required modules
- *  - instantiate localization model
- *  - init main shell view
- *  - instantiate main product model
- */
-
-
-function getUrl(url)
-{
+function getUrl(url) {
 	// simply return as is
 	return url;
 }
 
+function init() {
+	jQuery.sap.registerModulePath('app', 'js');
 
+	jQuery.sap.require("app.config");
+	jQuery.sap.require("app.localstorage");
+	jQuery.sap.require("app.formatter");
+	jQuery.sap.require("app.utility");
+	jQuery.sap.require("app.messages");
+	jQuery.sap.require("app.validator");
+	jQuery.sap.require("app.welcome");
+	jQuery.sap.require("app.viewcache");
 
-jQuery.sap.registerModulePath("app", "js");
+	// module path for custom controls
+	jQuery.sap.registerModulePath('composite', 'js/controls');
+	jQuery.sap.require("composite.productActions");
 
-jQuery.sap.require("app.config");
-jQuery.sap.require("app.formatter");
-jQuery.sap.require("app.utility");
-jQuery.sap.require("app.messages");
-jQuery.sap.require("app.validator");
-jQuery.sap.require("app.welcome");
+	// Internationalization:
+	// create global i18n resource bundle for texts in application UI
+	sap.app.i18n = new sap.ui.model.resource.ResourceModel({
+		bundleUrl : "i18n/i18n.properties",
+		locale : sap.ui.getCore().getConfiguration().getLanguage()
+	});
+	sap.ui.getCore().setModel(sap.app.i18n, "i18n");
 
-// module path for custom controls
-jQuery.sap.registerModulePath('composite', 'js/controls');
-jQuery.sap.require("composite.productActions");
+	// create global i18n resource bundle for country names
+	sap.app.countryBundle = jQuery.sap.resources({
+		url : "i18n/countries.properties",
+		locale : sap.ui.getCore().getConfiguration().getLanguage()
+	});
 
+	// get the data for the dropdown listbox with the country names in the address view (checkoutStep2)
+	sap.app.countries = new sap.ui.model.json.JSONModel(sap.app.config.countriesModelUrl);
+	sap.app.countries.setSizeLimit(300);
 
-// Internationalization:
-// create global i18n resource bundle for texts in application UI
-sap.app.i18n = new sap.ui.model.resource.ResourceModel({
-	bundleUrl: getUrl("i18n/i18n.properties"),
-	locale: sap.ui.getCore().getConfiguration().getLanguage()
-});
-sap.ui.getCore().setModel(sap.app.i18n, "i18n");
+	// create initial filters and sorter for product listing
+	sap.app.product = {};
+	sap.app.product.searchFilter = null;
+	sap.app.product.categoryFilter = null;
+	sap.app.product.nameSorter = new sap.ui.model.Sorter("Name", false);
 
-// create global i18n resource bundle for country names
-sap.app.countryBundle = jQuery.sap.resources({
-	url : getUrl("i18n/countries.properties"),
-	locale: sap.ui.getCore().getConfiguration().getLanguage()
-});
+	// instantiate initial view with a shell
+	sap.ui.localResources(sap.app.config.viewNamespace);
+	var oMainView = sap.ui.view({
+		id : "main-shell",
+		viewName : "espm-ui-shopping-web.main",
+		type : sap.ui.core.mvc.ViewType.JS
+	});
 
-// get the data for the dropdown listbox with the country names in the address view (checkoutStep2)
-sap.app.countries = new sap.ui.model.json.JSONModel(sap.app.config.countriesModelUrl);
-sap.app.countries.setSizeLimit(300);
+	jQuery.sap.require("sap.ui.model.odata.ODataListBinding");
+	sap.ui.model.odata.ODataListBinding.extend("ExtendedListBinding", {
+		constructor : function(oModel, sPath, oContext, oSorter, aFilters, mParameters) {
+			sap.ui.model.odata.ODataListBinding.apply(this, arguments); // call super-constructor
+		},
+		_createFilterSegment : function(sPath, sOperator, oValue1, oValue2, sFilterParam) {
 
-// create initial filters and sorter for product listing
-sap.app.product = {};
-sap.app.product.searchFilter = null;
-sap.app.product.categoryFilter = null;
-sap.app.product.nameSorter = new sap.ui.model.Sorter("Name", false);
-
-// instantiate initial view with a shell
-sap.ui.localResources(sap.app.config.viewNamespace);
-
-var oMainView = sap.ui.view({
-	id:"main-shell",
-	viewName:"espm-ui-shopping-web.main",
-	type:sap.ui.core.mvc.ViewType.JS
-});
-
-jQuery.sap.require("sap.ui.model.odata.ODataListBinding");
-sap.ui.model.odata.ODataListBinding.extend("ExtendedListBinding", {
-	constructor : function(oModel, sPath, oContext, oSorter, aFilters, mParameters) {
-		sap.ui.model.odata.ODataListBinding.apply(this, arguments); // call super-constructor
-	},
-	_createFilterSegment : function(sPath, sOperator, oValue1, oValue2, sFilterParam) {
-
-		var oProperty = null;
-		if (this.oEntityType) {
-			if(this.oModel.oMetadata._getPropertyMetadata!==undefined){
-				oProperty = this.oModel.oMetadata._getPropertyMetadata(this.oEntityType, sPath);
+			var oProperty = null;
+			if (this.oEntityType) {
+				if (this.oModel.oMetadata._getPropertyMetadata !== undefined) {
+					oProperty = this.oModel.oMetadata._getPropertyMetadata(this.oEntityType, sPath);
+				}
 			}
-		}
 
-		if (oProperty!=null) {
-			switch(oProperty.type) {
+			if (oProperty != null) {
+				switch (oProperty.type) {
 				case "Edm.String":
 					// quote
 					oValue1 = "'" + String(oValue1).replace(/'/g, "''") + "'";
@@ -106,19 +94,19 @@ sap.ui.model.odata.ODataListBinding.extend("ExtendedListBinding", {
 					break;
 				default:
 					break;
+				}
+			} else {
+				jQuery.sap.assert(null, "Type for filter property could not be found in metadata!");
 			}
-		} else {
-			jQuery.sap.assert(null, "Type for filter property could not be found in metadata!");
-		}
 
-		if (oValue1) {
-			oValue1 = jQuery.sap.encodeURL(String(oValue1));
-		}
-		if (oValue2) {
-			oValue2 = jQuery.sap.encodeURL(String(oValue2));
-		}
+			if (oValue1) {
+				oValue1 = jQuery.sap.encodeURL(String(oValue1));
+			}
+			if (oValue2) {
+				oValue2 = jQuery.sap.encodeURL(String(oValue2));
+			}
 
-		switch(sOperator) {
+			switch (sOperator) {
 			case "EQ":
 			case "NE":
 			case "GT":
@@ -141,49 +129,49 @@ sap.ui.model.odata.ODataListBinding.extend("ExtendedListBinding", {
 				break;
 			default:
 				sFilterParam += "true";
+			}
+			return sFilterParam;
 		}
-		return sFilterParam;
+	});
+
+	jQuery.sap.require("sap.ui.model.odata.ODataModel");
+	sap.ui.model.odata.ODataModel.extend("ExtendedOdataModel", {
+		constructor : function(sServiceUrl, bJSON, sUser, sPassword) {
+			sap.ui.model.odata.ODataModel.apply(this, arguments); // call super-constructor
+		},
+		/**
+		 * @see sap.ui.model.Model.prototype.bindList
+		 */
+		bindList : function(sPath, oContext, oSorter, aFilters, mParameters) {
+			var oBinding = new ExtendedListBinding(this, sPath, oContext, oSorter, aFilters, mParameters);
+			return oBinding;
+		}
+	});
+
+	// get business data from OData service
+	if (sap.app.localStorage.getPreference(sap.app.localStorage.PREF_USE_ABAP_BACKEND)) {
+		sap.app.odatamodel = new sap.ui.model.odata.ODataModel("proxy/" + sap.app.utility.getBackendDestination(), true);
+	} else {
+		sap.app.odatamodel = new ExtendedOdataModel("proxy/" + sap.app.utility.getBackendDestination(), true);
 	}
-});
 
+	// ensure that CSRF token is not taken from cache
+	sap.app.odatamodel.refreshSecurityToken();
 
-sap.ui.model.odata.ODataModel.extend("ExtendedOdataModel", {
-	constructor : function(sServiceUrl, bJSON, sUser, sPassword) {
-		sap.ui.model.odata.ODataModel.apply(this, arguments); // call super-constructor
-	},
-	/**
-	 * @see sap.ui.model.Model.prototype.bindList
-	 */
-	bindList : function(sPath, oContext, oSorter, aFilters, mParameters) {
-		var oBinding = new ExtendedListBinding(this, sPath, oContext, oSorter, aFilters, mParameters);
-		return oBinding;
-	}
-});
+	// set model to core
+	sap.ui.getCore().setModel(sap.app.odatamodel);
 
-//get business data from OData service
-var backendDestinationUrl = getUrl("proxy/" + sap.app.utility.getBackendDestination());
-if (sap.app.localStorage.getPreference(sap.app.localStorage.PREF_USE_ABAP_BACKEND)) {
-	sap.app.odatamodel = new sap.ui.model.odata.ODataModel(backendDestinationUrl, true);
-} else {
-	sap.app.odatamodel = new ExtendedOdataModel(backendDestinationUrl, true);
+	// get categories from OData model
+	sap.app.odatamodel.read("/ProductCategories", null, null, false, sap.app.readOdata.readCategoriesSuccess,
+			sap.app.readOdata.readError);
+
+	// get extension business data (product reviews related data)
+	sap.app.extensionodatamodel = new sap.ui.model.odata.ODataModel("proxy/"
+			+ sap.app.utility.getExtensionBackendDestination());
+	sap.app.extensionodatamodel.attachRequestCompleted(this, sap.app.readExtensionOData.requestCompleted);
+
+	// set model to core as extensionodatamodel
+	sap.ui.getCore().setModel(sap.app.extensionodatamodel, "extensionodatamodel");
+
+	oMainView.placeAt("content");
 }
-
-//ensure that CSRF token is not taken from cache
-sap.app.odatamodel.refreshSecurityToken();
-sap.app.odatamodel.attachRequestCompleted(this, sap.app.readOdata.requestCompleted);
-
-// set model to core
-sap.ui.getCore().setModel(sap.app.odatamodel);
-
-// get categories from OData model and set into JSON model of search.view. It is necessary to add entry 'All Categories' which is
-// not available in a OData model
-sap.app.odatamodel.read("/ProductCategories", null, null, false, sap.app.readOdata.readCategoriesSuccess, sap.app.readOdata.readError);
-
-// get extension business data (product reviews related data)
-sap.app.extensionodatamodel = new sap.ui.model.odata.ODataModel(getUrl("proxy/" + sap.app.utility.getExtensionBackendDestination()));
-sap.app.extensionodatamodel.attachRequestCompleted(this, sap.app.readExtensionOData.extensionRequestCompleted);
-
-// set model to core as extensionodatamodel
-sap.ui.getCore().setModel(sap.app.extensionodatamodel, "extensionodatamodel");
-
-oMainView.placeAt("content");

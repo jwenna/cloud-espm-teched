@@ -176,8 +176,7 @@ sap.ui.jsview("espm-ui-reviews-web.settings", {
 
 		// IE doesn't support launching URL with username, password
 		var testLinkForABAP = '';
-		if (navigator.appName
-				&& navigator.appName === 'Microsoft Internet Explorer') {
+		if (navigator.appName && navigator.appName === 'Microsoft Internet Explorer') {
 			testLinkForABAP = sap.app.config.displayAbapOdataServiceUrl;
 		} else {
 			testLinkForABAP = sap.app.config.abapOdataServiceUrlWithLogin;

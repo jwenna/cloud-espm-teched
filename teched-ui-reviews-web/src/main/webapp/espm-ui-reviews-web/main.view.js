@@ -4,24 +4,16 @@ sap.ui.jsview("espm-ui-reviews-web.main", {
 		return "espm-ui-reviews-web.main";
 	},
 
-	/**
-	 * createContent: instantiate the views 
-	 * @param oController
-	 * @returns {sap.ui.view} or {sap.ui.ux3.Shell}
-	 */
 	createContent : function(oController) {
-		sap.app.mainController = oController;
 
-		var oView = oController.getCachedView("reviews");
-		
-		if (sap.app.config.displayShell)
-		{
+		var oView = sap.app.viewCache.get("reviews");
+
+		if (sap.app.config.displayShell) {
 			var oShell = new sap.ui.ux3.Shell({
-				id : "main",
+				id : oController.createId("shell-id"),
 				appTitle : "{i18n>SHELL_HEADER_TITLE}",
 				showLogoutButton : true,
 				showSearchTool : false,
-				showInspectorTool : false,
 				showFeederTool : false,
 				showTools : true,
 				showPane : true,
@@ -31,8 +23,9 @@ sap.ui.jsview("espm-ui-reviews-web.main", {
 					text : "{i18n>SHELL_WORKSET_ITEM_CUSTOMER_REVIEWS}"
 				}) ]
 			});
-			
+
 			var oSettingsButton = new sap.ui.commons.Button({
+				id : oController.createId("settings-button-id"),
 				text : "{i18n>SHELL_HEADER_ITEM_SETTINGS_TEXT}",
 				tooltip : "{i18n>SHELL_HEADER_ITEM_SETTINGS_TOOLTIP}",
 				press : function(oEvent) {
@@ -41,15 +34,15 @@ sap.ui.jsview("espm-ui-reviews-web.main", {
 			});
 			oShell.addHeaderItem(oSettingsButton);
 
-			// initial shell content
 			oShell.addContent(oView);
 
 			return oShell;
-		}
-		else
-		{
+		} else {
+
 			// only display view (w/o shell)
 			return oView;
+
 		}
-	}
+
+	},
 });

@@ -12,6 +12,11 @@
 	<packaging>war</packaging>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.sap.teched.espm</groupId>
+			<artifactId>teched-ui-reviews-jpa</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<!-- SAP HANA Cloud SDK dependencies -->
 		<dependency>
 			<groupId>com.sap.cloud</groupId>
@@ -19,13 +24,6 @@
 			<version>${sap.cloud.sdk.version}</version>
 			<scope>system</scope>
 			<systemPath>${sap.cloud.sdk.path}/api/neo-sdk-core-api-${sap.cloud.sdk.version}.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>com.sap.core.persistence.osgi</groupId>
-			<artifactId>com.sap.core.persistence.osgi.hdb.platform</artifactId>
-			<version>${persistence.osgi.hdb.platform.version}</version>
-			<scope>system</scope>
-			<systemPath>${sap.cloud.sdk.path}/repository/plugins/com.sap.core.persistence.osgi.hdb.platform_${persistence.osgi.hdb.platform.version}.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -44,6 +42,32 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>1.7.2</version>
 			<scope>provided</scope>
+		</dependency>
+		<!-- SAP OData dependencies -->
+		<dependency>
+			<groupId>${sap.odata.groupId}</groupId>
+			<artifactId>com.sap.core.odata.api</artifactId>
+			<version>${sap.odata.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${sap.odata.groupId}</groupId>
+			<artifactId>com.sap.core.odata.core</artifactId>
+			<version>${sap.odata.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${sap.odata.groupId}</groupId>
+			<artifactId>com.sap.core.odata.processor.api</artifactId>
+			<version>${sap.odata.processor.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${sap.odata.groupId}</groupId>
+			<artifactId>com.sap.core.odata.processor.core</artifactId>
+			<version>${sap.odata.processor.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${sap.odata.groupId}</groupId>
+			<artifactId>com.sap.core.odata.api.annotation</artifactId>
+			<version>${sap.odata.processor.version}</version>
 		</dependency>
 		<!-- SAP UI5 dependencies -->
 		<dependency>
@@ -179,6 +203,19 @@
 							</includeGroupIds>
 						</configuration>
 					</execution>
+					<execution>
+						<id>unpack-dependencies</id>
+						<goals>
+							<goal>unpack-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/test-classes</outputDirectory>
+							<includeGroupIds>
+								com.sap.ui5.core
+							</includeGroupIds>
+							<overWriteReleases>true</overWriteReleases>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 			<plugin>
@@ -307,4 +344,5 @@
 			</build>
 		</profile>
 	</profiles>
+
 </project>

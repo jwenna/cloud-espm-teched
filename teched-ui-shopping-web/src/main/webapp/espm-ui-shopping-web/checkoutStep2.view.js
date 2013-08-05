@@ -6,21 +6,24 @@ sap.ui.jsview("espm-ui-shopping-web.checkoutStep2", {
 
 	createContent : function(oController) {
 
-		var oMatrix = new sap.ui.commons.layout.MatrixLayout({ id: "address" , width:"650px"});
+		var oMatrix = new sap.ui.commons.layout.MatrixLayout({
+			id : "address",
+			width : "650px"
+		});
 
 		var oFieldEmail = new sap.ui.commons.TextField({
-			id: "address-email",
-			value: "{EmailAddress}",
-			width: "200px",
-			required: true,
-			change : function( oEvent){
-				sap.app.validator.checkEmail( oEvent );
+			id : "address-email",
+			value : "{EmailAddress}",
+			width : "200px",
+			required : true,
+			change : function(oEvent) {
+				sap.app.validator.checkEmail(oEvent);
 			}
 		});
 
 		var oLabelEmail = new sap.ui.commons.Label({
-			labelFor: oFieldEmail,
-			text: "{i18n>LBL_EMAIL}"
+			labelFor : oFieldEmail,
+			text : "{i18n>LBL_EMAIL}"
 		});
 
 		var oRadioButtons = new sap.ui.commons.RadioButtonGroup({
@@ -41,10 +44,10 @@ sap.ui.jsview("espm-ui-shopping-web.checkoutStep2", {
 				var sSelectedItem = control.getSelectedItem().getId();
 				if (sSelectedItem == "new_customer") {
 					this.addAddressFields();
-					
+
 					// reset the fields
 					this.getController().resetFields();
-					
+
 					// we set the selected key after hte ddlb is added because otherwise it will be overwritten by the
 					// binding...
 					this.getController().presetCountry();
@@ -52,17 +55,16 @@ sap.ui.jsview("espm-ui-shopping-web.checkoutStep2", {
 				if (sSelectedItem == "existing_customer") {
 					this.removeAddressFields();
 				}
-				var aEmptyFields = sap.app.validator.getEmptyRequiredFields(aEmptyFields, this);
+				var aEmptyFields = sap.app.validator.getEmptyRequiredFields(this);
 				var bEnabled = aEmptyFields.length == 0 ? true : false;
 				sap.app.checkoutController.setNextStepEnabled(bEnabled, "checkout-step-3");
 			}, this ]
 		});
 
 		sap.app.CustomerTypeRadio = oRadioButtons;
-		oMatrix.createRow( oLabelEmail);
-		oMatrix.createRow( oFieldEmail);
-		oMatrix.createRow( oRadioButtons);
-
+		oMatrix.createRow(oLabelEmail);
+		oMatrix.createRow(oFieldEmail);
+		oMatrix.createRow(oRadioButtons);
 
 		// we check the input for all required fields for controlling the enablement of the proceed button and the step
 		// of the roadmap control
@@ -76,9 +78,9 @@ sap.ui.jsview("espm-ui-shopping-web.checkoutStep2", {
 	/**
 	 * addAddressFields: event handler when radiobutton for new customer is selected
 	 */
-	addAddressFields: function(){
+	addAddressFields : function() {
 
-		if (!this.addressFields){
+		if (!this.addressFields) {
 			this.createAddressFields();
 		}
 		var oMatrix = sap.ui.getCore().byId("address");
@@ -88,7 +90,7 @@ sap.ui.jsview("espm-ui-shopping-web.checkoutStep2", {
 	/**
 	 * removeAddressFields: event handler when radiobutton for existing customer is selected
 	 */
-	removeAddressFields: function(){
+	removeAddressFields : function() {
 		var oMatrix = sap.ui.getCore().byId("address");
 		oMatrix.removeRow("address-fields");
 	},
@@ -96,107 +98,106 @@ sap.ui.jsview("espm-ui-shopping-web.checkoutStep2", {
 	/**
 	 * createAddressFields: creates fields for input of address data
 	 */
-	createAddressFields: function(){
+	createAddressFields : function() {
 
 		var oColumn1Layout = new sap.ui.commons.layout.VerticalLayout({
-			id: "columns-left",
-			width: "300px"
+			id : "columns-left",
+			width : "300px"
 		});
 		var oColumn2Layout = new sap.ui.commons.layout.VerticalLayout({
-			id: "columns-right",
-			width: "300px"
+			id : "columns-right",
+			width : "300px"
 		});
 
 		var oFieldFirstName = new sap.ui.commons.TextField({
-			id: "addr-firstname",
-			value: "{FirstName}",
-			width: "200px",
-			required: true
+			id : "addr-firstname",
+			value : "{FirstName}",
+			width : "200px",
+			required : true
 		});
 		var oLabelFirstName = new sap.ui.commons.Label({
-			labelFor: oFieldFirstName,
-			text: "{i18n>LBL_FIRST_NAME}"
+			labelFor : oFieldFirstName,
+			text : "{i18n>LBL_FIRST_NAME}"
 		});
 
 		var oFieldLastName = new sap.ui.commons.TextField({
-			id: "addr-lastname",
-			value: "{LastName}",
-			width: "200px",
-			required: true
+			id : "addr-lastname",
+			value : "{LastName}",
+			width : "200px",
+			required : true
 		});
 		var oLabelLastName = new sap.ui.commons.Label({
-			labelFor: oFieldLastName,
-			text: "{i18n>LBL_LAST_NAME}"
+			labelFor : oFieldLastName,
+			text : "{i18n>LBL_LAST_NAME}"
 		});
 
 		var oFieldDateOfBirth = new sap.ui.commons.DatePicker({
 			// yyyymmdd:"19600101",
 			// value: "{DateOfBirth}",
-			id: "addr-dob",
-			value: {
-				path: "DateOfBirth",
-				type: new sap.ui.model.type.Date()
+			id : "addr-dob",
+			value : {
+				path : "DateOfBirth",
+				type : new sap.ui.model.type.Date()
 			},
-			width: "200px",
-			required: true	
+			width : "200px",
+			required : true
 		});
 		var oLabelDateOfBirth = new sap.ui.commons.Label({
-			labelFor: oFieldDateOfBirth,
-			text: "{i18n>LBL_DATE_OF_BIRTH}"
+			labelFor : oFieldDateOfBirth,
+			text : "{i18n>LBL_DATE_OF_BIRTH}"
 		});
 
 		var oFieldAddressStreet = new sap.ui.commons.TextField({
-			id: "addr-street",
-			value: "{Street}",
-			width: "200px",
-			required: true
+			id : "addr-street",
+			value : "{Street}",
+			width : "200px",
+			required : true
 		});
 		var oLabelAddressStreet = new sap.ui.commons.Label({
-			labelFor: oFieldAddressStreet,
-			text: "{i18n>LBL_ADDRESS_STREET}"
+			labelFor : oFieldAddressStreet,
+			text : "{i18n>LBL_ADDRESS_STREET}"
 		});
 
 		var oFieldAddressCity = new sap.ui.commons.TextField({
-			id: "addr-city",
-			value: "{City}",
-			width: "200px",
-			required: true
+			id : "addr-city",
+			value : "{City}",
+			width : "200px",
+			required : true
 		});
 		var oLabelAddressCity = new sap.ui.commons.Label({
-			labelFor: oFieldAddressCity,
-			text: "{i18n>LBL_ADDRESS_CITY}"
+			labelFor : oFieldAddressCity,
+			text : "{i18n>LBL_ADDRESS_CITY}"
 		});
 
 		var oFieldAddressZip = new sap.ui.commons.TextField({
-			id: "addr-zipcode",
-			value: "{PostalCode}",
-			width: "200px",
-			required: true
+			id : "addr-zipcode",
+			value : "{PostalCode}",
+			width : "200px",
+			required : true
 		});
 		var oLabelAddressZip = new sap.ui.commons.Label({
-			labelFor: oFieldAddressZip,
-			text: "{i18n>LBL_ADDRESS_ZIP}"
+			labelFor : oFieldAddressZip,
+			text : "{i18n>LBL_ADDRESS_ZIP}"
 		});
-
 
 		var oCountries = new sap.ui.commons.DropdownBox({
 			id : "countries-ddlb",
-			selectedKey: "{Country}",
+			selectedKey : "{Country}",
 			required : true,
 			width : "200px",
 			maxPopupItems : 10,
 			maxHistoryItems : 0,
-//			change : [ function(oEvent) {
-//				var control = oEvent.getSource();
-//			}, this ],
-//			liveChange : [ function(oEvent) {
-//				var control = oEvent.getSource();
-//			}, this ],
+		// change : [ function(oEvent) {
+		// var control = oEvent.getSource();
+		// }, this ],
+		// liveChange : [ function(oEvent) {
+		// var control = oEvent.getSource();
+		// }, this ],
 		});
 
 		var oLabelAddressCountry = new sap.ui.commons.Label({
-			labelFor: oCountries,
-			text: "{i18n>LBL_ADDRESS_COUNTRY}"
+			labelFor : oCountries,
+			text : "{i18n>LBL_ADDRESS_COUNTRY}"
 		});
 
 		oColumn1Layout.addContent(oLabelFirstName);
@@ -213,16 +214,20 @@ sap.ui.jsview("espm-ui-shopping-web.checkoutStep2", {
 		oColumn2Layout.addContent(oLabelAddressZip);
 		oColumn2Layout.addContent(oFieldAddressZip);
 		oColumn2Layout.addContent(oLabelAddressCountry);
-		//oColumn2Layout.addContent(oFieldAddressCountry);
+		// oColumn2Layout.addContent(oFieldAddressCountry);
 		oColumn2Layout.addContent(oCountries);
 
-		var oCell = new sap.ui.commons.layout.MatrixLayoutCell(	{ vAlign : sap.ui.commons.layout.VAlign.Top	});
+		var oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+			vAlign : sap.ui.commons.layout.VAlign.Top
+		});
 		oCell.addContent(oColumn1Layout);
 		oCell.addContent(oColumn2Layout);
 
-		var oRow = new sap.ui.commons.layout.MatrixLayoutRow({ id: "address-fields"});
+		var oRow = new sap.ui.commons.layout.MatrixLayoutRow({
+			id : "address-fields"
+		});
 
-		oRow.addCell( oCell );
+		oRow.addCell(oCell);
 		this.addressFields = oRow;
 
 		// mapLanguageCountryNames must be called, after control is created

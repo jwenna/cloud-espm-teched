@@ -1,18 +1,13 @@
-/** config.js
- *
- *  holds all configurable properties
- */
-
 jQuery.sap.declare("sap.app.config");
 
 sap.app.config = {
 	// If 'true' OData service connected to ABAP Backend is used. Otherwise HANA Cloud is used.
-	useAbapBackend: false,
+	useAbapBackend : false,
 
 	// If 'true' welcome dialog is displayed
 	displayWelcomeDialog : true,
 
-	// If 'true' data source information is displayed in 'Select a Product' area (Abap or HANA Cloud) and 
+	// If 'true' data source information is displayed in 'Select a Product' area (Abap or HANA Cloud) and
 	// 'Customer reviews of selected product' area
 	displayDataSourceInfo : false,
 
@@ -22,9 +17,9 @@ sap.app.config = {
 	abapImagesBaseUrl : "",
 	cloudImagesBaseUrl : "/espm-model-web/images/",
 
-	// backend details used in settings and for odata service Url links. Keep this data in sync destinations 
+	// backend details used in settings and for odata service Url links. Keep this data in sync destinations
 	// see destinations/cloudextensionbackend
-	cloudExtentionOdataServiceUrl : "https://webcloudmodelextespmhana.hana.ondemand.com/espm-model-extension-web/espm.svc",
+	cloudExtensionOdataServiceUrl : "https://webcloudmodelextespmhana.hana.ondemand.com/espm-model-extension-web/espm.svc",
 	// see destinations/cloudbackend
 	cloudOdataServiceUrl : "https://webcloudmodelespmhana.hana.ondemand.com/espm-model-web/jpa.svc",
 	// see destinations/abapbackend
@@ -36,24 +31,23 @@ sap.app.config = {
 	displayAbapPassword : "Espm1234",
 
 	// local JSON model provides customer, items and order for write access
-	orderModelUrl: getUrl("data/order.json"),
+	orderModelUrl : getUrl("data/order.json"),
 
 	// local JSON model provides countries for address data
 	countriesModelUrl : getUrl("data/countries.json"),
 
-	productPlaceholderImg: getUrl("images/placeholder.product.150x150.png"),
-
+	productPlaceholderImg : getUrl("images/placeholder.product.150x150.png"),
 	// Symbol for Euro
-	currencySymbol: "\u20AC",
+	currencySymbol : "\u20AC",
 	// Placeholder with Euro Symbol
-	currencyFormat: "%1 \u20AC",
-	currencyName: "Euro",
+	currencyFormat : "%1 \u20AC",
+	currencyName : "Euro",
 	// location (namespace) for views within an application
-	viewNamespace: "espm-ui-shopping-web",
+	viewNamespace : "espm-ui-shopping-web",
 	// maximum number of rows to be displayed before a paging is available
-	productsNumRows: 100,
-	categoriesNumRows: 50,
+	productsNumRows : 100,
+	categoriesNumRows : 50,
 
-	messageDuration: 8000
+	messageDuration : 8000
 
 };

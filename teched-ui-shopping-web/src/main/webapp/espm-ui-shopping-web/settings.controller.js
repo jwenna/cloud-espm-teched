@@ -12,20 +12,19 @@ sap.ui.controller("espm-ui-shopping-web.settings", {
 
 		// display data source info
 		var oDisplayDataSourceInfoChkBox = sap.ui.getCore().byId("cloud-odata-display-data-source-info-chkbox-id");
-		sap.app.localStorage.storePreference(sap.app.localStorage.PREF_DISPLAY_DATA_SOURCE_INFO, oDisplayDataSourceInfoChkBox
-				.getChecked());
+		sap.app.localStorage.storePreference(sap.app.localStorage.PREF_DISPLAY_DATA_SOURCE_INFO,
+				oDisplayDataSourceInfoChkBox.getChecked());
 
 		// display customer reviews
 		var oDisplayCustomerReviewsChkBox = sap.ui.getCore().byId("display-customer-reviews-chkbox-id");
-		sap.app.localStorage.storePreference(sap.app.localStorage.PREF_DISPLAY_CUSTOMER_REVIEWS, oDisplayCustomerReviewsChkBox
-				.getChecked());
+		sap.app.localStorage.storePreference(sap.app.localStorage.PREF_DISPLAY_CUSTOMER_REVIEWS,
+				oDisplayCustomerReviewsChkBox.getChecked());
 
 		sap.ui.commons.MessageBox.alert(sap.app.i18n.getProperty("SETTINGS_STORED_SUCCESS_MSG"),
-			// callback to refresh the page automatically
-			function() {
-				window.location.reload();
-			}
-		);
+		// callback to refresh the page automatically
+		function() {
+			window.location.reload();
+		});
 
 		// close settings dialog
 		sap.ui.getCore().byId("settings-dialog-id").close();
@@ -37,7 +36,7 @@ sap.ui.controller("espm-ui-shopping-web.settings", {
 	},
 
 	initializeSettingsDialog : function() {
-		var oController = sap.app.mainController.getCachedView("settings").getController();
+		var oController = sap.app.viewCache.get("settings").getController();
 
 		// use abap backend
 		var oCloudRadioButton = sap.ui.getCore().byId("settings-cloud-backend-rb1-id");
@@ -48,11 +47,13 @@ sap.ui.controller("espm-ui-shopping-web.settings", {
 
 		// display data source info
 		var oDisplayDataSourceInfoChkBox = sap.ui.getCore().byId("cloud-odata-display-data-source-info-chkbox-id");
-		oDisplayDataSourceInfoChkBox.setChecked(sap.app.localStorage.getPreference(sap.app.localStorage.PREF_DISPLAY_DATA_SOURCE_INFO));
+		oDisplayDataSourceInfoChkBox.setChecked(sap.app.localStorage
+				.getPreference(sap.app.localStorage.PREF_DISPLAY_DATA_SOURCE_INFO));
 
 		// display customer reviews
 		var oDisplayCustomerReviewsChkBox = sap.ui.getCore().byId("display-customer-reviews-chkbox-id");
-		oDisplayCustomerReviewsChkBox.setChecked(sap.app.localStorage.getPreference(sap.app.localStorage.PREF_DISPLAY_CUSTOMER_REVIEWS));
+		oDisplayCustomerReviewsChkBox.setChecked(sap.app.localStorage
+				.getPreference(sap.app.localStorage.PREF_DISPLAY_CUSTOMER_REVIEWS));
 	},
 
 	getPreferenceUseAbapBackend : function() {

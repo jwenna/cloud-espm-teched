@@ -5,21 +5,19 @@ sap.ui.jsview("espm-ui-shopping-web.reviews", {
 	},
 
 	createContent : function(oController) {
-
 		var oReviewsViewLayout = new sap.ui.commons.layout.MatrixLayout({
 			id : "reviews-view-layout-id",
 		});
 
-		oReviewsViewLayout.createRow( this.getProductSelectionPanel() );
-		oReviewsViewLayout.createRow( this.getCustomerReviewsPanel() );
+		oReviewsViewLayout.createRow(this.getProductSelectionPanel());
+		oReviewsViewLayout.createRow(this.getCustomerReviewsPanel());
 
 		return oReviewsViewLayout;
 	},
 
 	/**
-	 * Panel contains the capabilities to select a single product and displays
-	 * corresponding products details. The button on the panel opens a dialog
-	 * from where a customer review can be created.
+	 * Panel contains the capabilities to select a single product and displays corresponding products details. The
+	 * button on the panel opens a dialog from where a customer review can be created.
 	 * 
 	 * @returns {sap.ui.commons.Panel}
 	 */
@@ -57,17 +55,16 @@ sap.ui.jsview("espm-ui-shopping-web.reviews", {
 
 		// category selection
 		oProductSelectionLayout.createRow(new sap.ui.commons.layout.MatrixLayoutCell({
-			content : [ sap.app.mainController.getCachedView("categories-selection") ]
+			content : [ sap.app.viewCache.get("categories-selection") ]
 		}));
 
 		// product selection
 		oProductSelectionLayout.createRow(new sap.ui.commons.layout.MatrixLayoutCell({
-			content : [ sap.app.mainController.getCachedView("product-selection") ]
+			content : [ sap.app.viewCache.get("product-selection") ]
 		}));
 
 		var oProductSelectionPanel = new sap.ui.commons.Panel({
 			id : "reviews-view-product-selection-panel-id",
-			visible : true,
 			width : "100%",
 			areaDesign : sap.ui.commons.enums.AreaDesign.Plain,
 			borderDesign : sap.ui.commons.enums.BorderDesign.None,
@@ -82,31 +79,30 @@ sap.ui.jsview("espm-ui-shopping-web.reviews", {
 	},
 
 	/**
-	 * Panel contains the list of available customer reviews of the product
-	 * which has been selected in the product selection panel
+	 * Panel contains the list of available customer reviews of the product which has been selected in the product
+	 * selection panel
 	 * 
 	 * @returns {sap.ui.commons.Panel}
 	 */
-	getCustomerReviewsPanel: function() {
+	getCustomerReviewsPanel : function() {
 		var oProductReviewsListLayout = new sap.ui.commons.layout.MatrixLayout({
 			width : "100%",
 		});
 
-		oProductReviewsListLayout
-				.createRow(new sap.ui.commons.layout.MatrixLayoutCell(
-						{
-							content : [ sap.app.mainController.getCachedView("customer-reviews") ]
-						}));
+		oProductReviewsListLayout.createRow(new sap.ui.commons.layout.MatrixLayoutCell({
+			content : [ sap.app.viewCache.get("customer-reviews") ]
+		}));
 
 		var oCustomerReviewsPanel = new sap.ui.commons.Panel({
 			id : "reviews-view-customer-reviews-panel-id",
-			visible : false,
 			width : "100%",
 			areaDesign : sap.ui.commons.enums.AreaDesign.Plain,
 			borderDesign : sap.ui.commons.enums.BorderDesign.None,
 			showCollapseIcon : false,
-			content : [oProductReviewsListLayout],
-			title : new sap.ui.commons.Title({text: "{i18n>REVIEWS_LIST_PANEL_TITLE}"})
+			content : [ oProductReviewsListLayout ],
+			title : new sap.ui.commons.Title({
+				text : "{i18n>REVIEWS_LIST_PANEL_TITLE}"
+			})
 		});
 
 		return oCustomerReviewsPanel;

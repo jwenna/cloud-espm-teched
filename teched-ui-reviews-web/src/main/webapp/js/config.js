@@ -7,13 +7,12 @@ sap.app.config = {
 	// If 'true' OData service connected to ABAP Backend is used. Otherwise HANA Cloud is used.
 	useAbapBackend : true,
 
-	// If 'true' data source information is displayed in 'Select a Product' area (Abap or HANA Cloud) and 
+	// If 'true' data source information is displayed in 'Select a Product' area (Abap or HANA Cloud) and
 	// 'Customer reviews of selected product' area
 	displayDataSourceInfo : true,
 
-	// backend details used in settings and for odata service Url links. Keep this data in sync destinations 
-	// see destinations/cloudextensionbackend
-	cloudExtentionOdataServiceUrl : "https://webcloudmodelextespmhana.hana.ondemand.com/espm-model-extension-web/espm.svc",
+	cloudExtensionOdataServiceUrl : "espm.svc",
+
 	// see destinations/cloudbackend
 	cloudOdataServiceUrl : "https://webcloudmodelespmhana.hana.ondemand.com/espm-model-web/jpa.svc",
 
@@ -25,11 +24,10 @@ sap.app.config = {
 	displayAbapUser : "ESPM_TEST",
 	displayAbapPassword : "Espm1234",
 
-	abapImagesBaseUrl : getUrl(""),
-	cloudImagesBaseUrl : getUrl("espm-model-web/images/"),
+	abapImagesBaseUrl : "",
+	cloudImagesBaseUrl : "/espm-model-web/images/",
 	productPlaceholderImg : getUrl("images/placeholder.product.150x150.png"),
-	
-	displayProductSelectionPanel: true,
-	displayShell: true,
-	
+
+	displayProductSelectionPanel : true,
+	displayShell : true,
 };

@@ -1,31 +1,25 @@
 sap.ui.controller("espm-ui-shopping-web.reviews", {
 
 	onInit : function() {
+		sap.app.viewCache.get("categories-selection").getController().loadCategories();
 	},
 
-	showProductSelectionPanel : function() {
-		sap.app.uivisibility.setUiControlIsVisible("reviews-view-product-selection-panel-id", true);
+	showFilledCustomerReviewsPanel : function() {
+		sap.app.viewCache.get("customer-reviews").getController().showRowRepeaterHeaderLayout();
+		sap.app.viewCache.get("customer-reviews").getController().showRowRepeater();
+		sap.app.viewCache.get("customer-reviews").getController().hideRowRepeaterFooterLayout();
 	},
 
-	showFilledCustomerReviewsPanel: function() {
-		this.showProductSelectionPanel();
-		sap.app.uivisibility.showRowRepeaterHeaderLayout();
-		sap.app.uivisibility.showRowRepeater();
-		sap.app.uivisibility.hideRowRepeaterFooterLayout();
+	showEmptyCustomerReviewsPanel : function() {
+		sap.app.viewCache.get("customer-reviews").getController().hideRowRepeaterHeaderLayout();
+		sap.app.viewCache.get("customer-reviews").getController().hideRowRepeater();
+		sap.app.viewCache.get("customer-reviews").getController().showRowRepeaterFooterLayout();
 	},
 
-	showEmptyCustomerReviewsPanel: function() {
-		this.showProductSelectionPanel();
-		sap.app.uivisibility.hideRowRepeaterHeaderLayout();
-		sap.app.uivisibility.hideRowRepeater();
-		sap.app.uivisibility.showRowRepeaterFooterLayout();
-	},
-
-	showLoadingCustomerReviewsPanel: function() {
-		sap.ui.getCore().byId("reviews-view-customer-reviews-panel-id").setVisible(true);
-		sap.app.uivisibility.hideRowRepeaterHeaderLayout();
-		sap.app.uivisibility.hideRowRepeater();
-		sap.app.uivisibility.hideRowRepeaterFooterLayout();
+	showLoadingCustomerReviewsPanel : function() {
+		sap.app.viewCache.get("customer-reviews").getController().hideRowRepeaterHeaderLayout();
+		sap.app.viewCache.get("customer-reviews").getController().hideRowRepeater();
+		sap.app.viewCache.get("customer-reviews").getController().hideRowRepeaterFooterLayout();
 	},
 
 });

@@ -22,21 +22,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<!-- Properties that hold host and port of proxy if you have one - otherwise 
-			set local.server.proxy.settings and browser.proxy.settings values empty -->
-		<proxy.host>proxy</proxy.host>
-		<proxy.port>8080</proxy.port>
-		<local.server.proxy.settings>--httpProxyHost ${proxy.host} --httpProxyPort ${proxy.port} --httpsProxyHost ${proxy.host} --httpsProxyPort ${proxy.port}</local.server.proxy.settings>
-		<browser.proxy.settings>-Dhttp.proxyHost=${proxy.host} -Dhttp.proxyPort=${proxy.port} -Dhttps.proxyHost=${proxy.host} -Dhttps.proxyPort=${proxy.port}</browser.proxy.settings>
-	
-		<!-- Properties that hold information on the location and version of the SAP HANA Cloud SDK -->
-		<sap.cloud.sdk.version>1.28.3</sap.cloud.sdk.version>
-		<sap.cloud.sdk.path>${env.NW_CLOUD_SDK_PATH}</sap.cloud.sdk.path>
-
-		<!-- Properties needed to reference sapui5 -->
-		<sap.cloud.ui5.version>1.12.5</sap.cloud.ui5.version>
-		<eclipse.path>${env.ECLIPSE_HOME}</eclipse.path>
-
 		<!-- Properties that hold the local server information required for local 
 			integration testing -->
 		<local.server.root>${project.build.directory}/server</local.server.root>
@@ -44,30 +29,26 @@
 
 		<!-- Property that holds the source path to the backend destinations -->
 		<destinations.path>${basedir}/../destinations</destinations.path>
-
-		<persistence.osgi.hdb.platform.version>0.6.10</persistence.osgi.hdb.platform.version>
+		
+		<!-- Properties needed to reference sap OData -->
+		<sap.odata.version>0.6.0</sap.odata.version>
+		<sap.odata.processor.version>0.6.0</sap.odata.processor.version>
+		<!-- use 'com.sap.odata' when testing released version 0.6.0 -->
+		<sap.odata.groupId>com.sap.odata</sap.odata.groupId>
 	</properties>
 
 	<modules>
-		<module>teched-ui-shopping-web</module>
-		<module>teched-model-extension-jpa</module>
-		<module>teched-model-extension-web</module>
+		<module>teched-ui-reviews-jpa</module>
 		<module>teched-ui-reviews-web</module>
+		<module>teched-ui-shopping-web</module>
 	</modules>
 
-	<repositories>
-		<repository>
-			<id>EclipseLink</id>
-			<url>http://download.eclipse.org/rt/eclipselink/maven.repo</url>
-		</repository>
-	</repositories>
-  
 	<dependencies>
 		<!-- Test dependencies -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.10</version>
+			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -79,7 +60,13 @@
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
-			<version>2.31.0</version>
+			<version>2.33.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.7</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -131,6 +118,7 @@
 										<versionRange>[2.4,)</versionRange>
 										<goals>
 											<goal>copy-dependencies</goal>
+											<goal>unpack-dependencies</goal>
 										</goals>
 									</pluginExecutionFilter>
 									<action>

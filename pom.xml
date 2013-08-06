@@ -52,8 +52,6 @@
 	</properties>
 
 	<modules>
-		<module>teched-ui-reviews-jpa</module>
-		<module>teched-ui-reviews-web</module>
 		<module>teched-ui-shopping-web</module>
 	</modules>
 

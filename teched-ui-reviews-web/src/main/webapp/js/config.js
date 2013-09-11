@@ -26,7 +26,7 @@ sap.app.config = {
 
 	abapImagesBaseUrl : "",
 	cloudImagesBaseUrl : "/espm-model-web/images/",
-	productPlaceholderImg : getUrl("images/placeholder.product.150x150.png"),
+	productPlaceholderImg : "images/placeholder.product.150x150.png",
 
 	displayProductSelectionPanel : true,
 	displayShell : true,

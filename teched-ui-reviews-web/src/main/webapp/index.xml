@@ -6,6 +6,6 @@
 	<Require feature="sap-context"/>
   </ModulePrefs>
 
-  <Content type="html" href="https://espmp1863875835trial.hanatrial.ondemand.com/teched-ui-reviews-web/index_portal.html">
+  <Content type="html" href="index_portal.html">
   </Content>
 </Module>

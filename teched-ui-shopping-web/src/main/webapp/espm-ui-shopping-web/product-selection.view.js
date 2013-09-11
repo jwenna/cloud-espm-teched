@@ -60,8 +60,8 @@ sap.ui.jsview("espm-ui-shopping-web.product-selection", {
 								} else {
 									var re = /.JPG/g;
 									src = src.replace(re, ".jpg");
-									return getUrl("proxy/" + sap.app.utility.getBackendImagesDestination()
-											+ sap.app.utility.getImagesBaseUrl() + src);
+									return "proxy/" + sap.app.utility.getBackendImagesDestination()
+											+ sap.app.utility.getImagesBaseUrl() + src;
 								}
 							}
 						},

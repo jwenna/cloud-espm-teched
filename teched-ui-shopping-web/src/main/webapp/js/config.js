@@ -31,12 +31,12 @@ sap.app.config = {
 	displayAbapPassword : "Espm1234",
 
 	// local JSON model provides customer, items and order for write access
-	orderModelUrl : getUrl("data/order.json"),
+	orderModelUrl : "data/order.json",
 
 	// local JSON model provides countries for address data
-	countriesModelUrl : getUrl("data/countries.json"),
+	countriesModelUrl : "data/countries.json",
 
-	productPlaceholderImg : getUrl("images/placeholder.product.150x150.png"),
+	productPlaceholderImg : "images/placeholder.product.150x150.png",
 	// Symbol for Euro
 	currencySymbol : "\u20AC",
 	// Placeholder with Euro Symbol

@@ -207,7 +207,7 @@ sap.ui.controller("espm-ui-shopping-web.checkout", {
 		case "checkout-step-4":
 			oTitle = sap.ui.getCore().byId("checkout-cart-title");
 			oImage = new sap.ui.commons.Image({
-				src : getUrl("images/icon.cart.24x24.png")
+				src : "images/icon.cart.24x24.png"
 			});
 			// sap.app.cartController.updateTotal("checkout-");
 			break;
@@ -222,7 +222,7 @@ sap.ui.controller("espm-ui-shopping-web.checkout", {
 				}).addStyleClass("uppercase");
 			}
 			oImage = new sap.ui.commons.Image({
-				src : getUrl("images/icon.cart.24x24.png")
+				src : "images/icon.cart.24x24.png"
 			});
 			bBackPossible = false;
 			break;

@@ -1,8 +1,3 @@
-function getUrl(url) {
-	// simply return as is
-	return url;
-}
-
 function init() {
 	jQuery.sap.registerModulePath('app', 'js');
 

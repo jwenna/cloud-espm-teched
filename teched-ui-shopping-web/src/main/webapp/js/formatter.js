@@ -18,8 +18,8 @@ sap.app.formatter = {
 		if (!src) {
 			return sap.app.config.productPlaceholderImg;
 		}
-		return getUrl("proxy/" + sap.app.utility.getBackendImagesDestination() + sap.app.utility.getImagesBaseUrl()
-				+ src);
+		return "proxy/" + sap.app.utility.getBackendImagesDestination() + sap.app.utility.getImagesBaseUrl()
+				+ src;
 	},
 
 	price : function(price) {

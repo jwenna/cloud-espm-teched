@@ -20,7 +20,7 @@ function init() {
 	sap.ui.getCore().setModel(sap.app.odatamodel);
 
 	// get extension business data (product reviews related data)
-	sap.app.extensionodatamodel = new sap.ui.model.odata.ODataModel(sap.app.config.cloudExtensionOdataServiceUrl);
+	sap.app.extensionodatamodel = new sap.ui.model.odata.ODataModel("proxy/" + sap.app.utility.getExtensionBackendDestination());
 	sap.app.extensionodatamodel.attachRequestCompleted(sap.app.readExtensionOData.requestCompleted);
 	sap.ui.getCore().setModel(sap.app.extensionodatamodel, "extensionodatamodel");
 

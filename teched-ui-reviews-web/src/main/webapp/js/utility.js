@@ -16,6 +16,10 @@ sap.app.utility = {
 			return ("cloudbackendimages");
 		}
 	},
+	
+	getExtensionBackendDestination : function() {
+        return ("cloudextensionbackend");
+	},
 
 	getImagesBaseUrl : function() {
 		if (sap.app.localStorage.getPreference(sap.app.localStorage.PREF_USE_ABAP_BACKEND)) {
